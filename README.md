@@ -2,6 +2,12 @@
 
 Telegram bot API. Flow-compatible. Without unnecessary explicit dependencies in runtime.
 
+## Installation
+
+```
+npm install --save tgapi
+```
+
 ## Basic usage
 
 ```javascript

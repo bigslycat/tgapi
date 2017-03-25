@@ -23,7 +23,7 @@
     "prebuild": "npm run lint && npm run flow && npm test",
     "build": "npm run build:clean && npm run build:src && npm run build:import",
     "build:clean": "shx rm -rf lib",
-    "build:src": "babel src --out-dir lib",
+    "build:src": "babel src --out-dir lib --ignore spec.js",
     "build:import": "npm run build:client && npm run build:server && npm run build:request",
     "build:client": "babel BotClient.js.flow -o BotClient.js",
     "build:server": "babel pureServer.js.flow -o pureServer.js",

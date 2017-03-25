@@ -1,0 +1,28 @@
+parser: babel-eslint
+
+extends:
+  - airbnb
+  - plugin:import/errors
+  - plugin:import/warnings
+  - plugin:flowtype/recommended
+  - .eslintrc.flow.yml
+
+plugins:
+  - import
+  - flowtype
+
+env:
+  node: true
+
+parserOptions:
+  ecmaVersion: 8
+  sourceType: module
+  ecmaFeatures:
+    impliedStrict: true
+    experimentalObjectRestSpread: true
+
+rules:
+  semi:
+    - error
+    - always
+    - omitLastInOneLineBlock: true

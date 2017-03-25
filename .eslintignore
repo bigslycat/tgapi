@@ -1,3 +1,4 @@
 /lib
 /flow-typed/npm
+/coverage
 /*.js

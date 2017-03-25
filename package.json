@@ -17,7 +17,7 @@
     ".flowconfig"
   ],
   "scripts": {
-    "lint": "eslint",
+    "lint": "eslint .",
     "flow": "flow",
     "test": "jest --env=node",
     "prebuild": "npm run lint && npm run flow && npm test",

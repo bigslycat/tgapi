@@ -1,0 +1,80 @@
+{
+  "name": "tgapi",
+  "version": "0.0.0",
+  "description": "Telegram bot API",
+  "main": "lib/BotClient/index.js",
+  "files": [
+    "README.md",
+    "LICENSE.md",
+    "lib",
+    "BotClient.js",
+    "BotClient.js.flow",
+    "pureServer.js",
+    "pureServer.js.flow",
+    "sendRequest.js",
+    "sendRequest.js.flow",
+    "flow-typed",
+    ".flowconfig"
+  ],
+  "scripts": {
+    "lint": "eslint",
+    "flow": "flow",
+    "test": "jest --env=node",
+    "prebuild": "npm run lint && npm run flow && npm test",
+    "build": "npm run build:clean && npm run build:src && npm run build:import",
+    "build:clean": "shx rm -rf lib",
+    "build:src": "babel src --out-dir lib",
+    "build:import": "npm run build:client && npm run build:server && npm run build:request",
+    "build:client": "babel BotClient.js.flow -o BotClient.js",
+    "build:server": "babel pureServer.js.flow -o pureServer.js",
+    "build:request": "babel sendRequest.js.flow -o sendRequчest.js",
+    "postbuild": "flow-copy-source -v -i '**/*.spec.js' src lib",
+    "precommit": "npm run prebuild",
+    "preversion": "git checkout master && npm run build",
+    "postversion": "npm publish && git push origin master --tags"
+  },
+  "dependencies": {
+    "bluebird": "3.5.0",
+    "node-fetch": "1.6.3"
+  },
+  "devDependencies": {
+    "babel-cli": "6.24.0",
+    "babel-eslint": "7.2.1",
+    "babel-plugin-ramda": "1.2.0",
+    "babel-plugin-transform-flow-strip-types": "6.22.0",
+    "babel-preset-env": "1.2.2",
+    "babel-preset-stage-0": "6.22.0",
+    "eslint": "3.18.0",
+    "eslint-config-airbnb": "14.1.0",
+    "eslint-plugin-flowtype": "2.30.4",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "4.0.0",
+    "eslint-plugin-react": "6.10.3",
+    "flow-bin": "0.42.0",
+    "flow-copy-source": "1.1.0",
+    "husky": "0.13.3",
+    "jest": "19.0.2",
+    "shx": "0.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bigslycat/tgapi.git"
+  },
+  "keywords": [
+    "API",
+    "bot",
+    "bots",
+    "Telegram",
+    "tg"
+  ],
+  "author": {
+    "name": "Pavel Tereschenko",
+    "email": "me@pavlik.pro",
+    "url": "https://github.com/bigslycat"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bigslycat/tgapi/issues"
+  },
+  "homepage": "https://github.com/bigslycat/tgapi#readme"
+}

@@ -10,17 +10,16 @@ import type {
   CallbackGame,
 } from './games';
 
-type UpdateBaseType = { update_id: number };
-
-export type Update = UpdateBaseType & (
-  { message: Message } |
-  { edited_message: Message } |
-  { channel_post: Message } |
-  { edited_channel_post: Message } |
-  { inline_query: InlineQuery } |
-  { chosen_inline_result: ChosenInlineResult } |
-  { callback_query: CallbackQuery }
-);
+export type Update = {
+  update_id: number,
+  message?: Message,
+  edited_message?: Message,
+  channel_post?: Message,
+  edited_channel_post?: Message,
+  inline_query?: InlineQuery,
+  chosen_inline_result?: ChosenInlineResult,
+  callback_query?: CallbackQuery,
+};
 
 export type UpdateType = 'message' | 'edited_message' | 'channel_post' | 'edited_channel_post' |
                          'inline_query' | 'chosen_inline_result' | 'callback_query';

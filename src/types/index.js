@@ -88,17 +88,22 @@ export type Message = {
   pinned_message?: Message,
 };
 
-type MessageEntityBaseType = {
+export type MessageEntity = {
+  type: 'mention' | 'hashtag' | 'bot_command' | 'url' |
+          'email' | 'bold' | 'italic' | 'code' | 'pre',
+  offset: number,
+  length: number,
+} | {
+  type: 'text_link',
+  url: string,
+  offset: number,
+  length: number,
+} | {
+  type: 'text_mention',
+  user: User,
   offset: number,
   length: number,
 };
-
-export type MessageEntity = MessageEntityBaseType & (
-  { type: 'mention' | 'hashtag' | 'bot_command' | 'url' |
-          'email' | 'bold' | 'italic' | 'code' | 'pre' }
-  | { type: 'text_link', url: string }
-  | { type: 'text_mention', user: User }
-);
 
 export type PhotoSize = {
   file_id: string,

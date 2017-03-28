@@ -88,17 +88,72 @@ export type Message = {
   pinned_message?: Message,
 };
 
-export type MessageEntity = {
-  type: 'mention' | 'hashtag' | 'bot_command' | 'url' |
-          'email' | 'bold' | 'italic' | 'code' | 'pre',
+export type MessageEntity = MentionEntity | HashtagEntity | BotCommandEntity | UrlEntity |
+  EmailEntity | BoldEntity | ItalicEntity | CodeEntity | PreEntity | TextLinkEntity |
+  TextMentionEntity;
+
+export type MentionEntity = {
+  type: 'mention',
   offset: number,
   length: number,
-} | {
+};
+
+export type HashtagEntity = {
+  type: 'hashtag',
+  offset: number,
+  length: number,
+};
+
+export type BotCommandEntity = {
+  type: 'bot_command',
+  offset: number,
+  length: number,
+};
+
+export type UrlEntity = {
+  type: 'url',
+  offset: number,
+  length: number,
+};
+
+export type EmailEntity = {
+  type: 'email',
+  offset: number,
+  length: number,
+};
+
+export type BoldEntity = {
+  type: 'bold',
+  offset: number,
+  length: number,
+};
+
+export type ItalicEntity = {
+  type: 'italic',
+  offset: number,
+  length: number,
+};
+
+export type CodeEntity = {
+  type: 'code',
+  offset: number,
+  length: number,
+};
+
+export type PreEntity = {
+  type: 'pre',
+  offset: number,
+  length: number,
+};
+
+export type TextLinkEntity = {
   type: 'text_link',
   url: string,
   offset: number,
   length: number,
-} | {
+};
+
+export type TextMentionEntity = {
   type: 'text_mention',
   user: User,
   offset: number,

@@ -2,6 +2,12 @@
 
 Telegram bot API. Flow-compatible. Without unnecessary explicit dependencies in runtime.
 
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Advansed usage](#advansed-usage)
+  - [Webhooks](#webhooks)
+- [Native API methods support](#native-api-methods-support)
+
 ## Installation
 
 ```

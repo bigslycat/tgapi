@@ -8,7 +8,7 @@ Telegram bot API. Flow-compatible. Without unnecessary explicit dependencies in 
 npm install --save tgapi
 ```
 
-## Basic usage
+## Usage
 
 ```javascript
 
@@ -60,7 +60,7 @@ server.listen(80, () => console.log(
 bot.on('updateReceived', update => console.log(update));
 ```
 
-### Native methods support
+## Native API methods support
 
 - [x] `getUpdates`
 - [x] `setWebhook`

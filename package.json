@@ -41,7 +41,6 @@
   "devDependencies": {
     "babel-cli": "6.24.0",
     "babel-eslint": "7.2.1",
-    "babel-plugin-ramda": "1.2.0",
     "babel-plugin-transform-flow-strip-types": "6.22.0",
     "babel-preset-env": "1.2.2",
     "babel-preset-stage-0": "6.22.0",

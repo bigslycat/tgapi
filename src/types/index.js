@@ -10,6 +10,13 @@ import type {
   CallbackGame,
 } from './games';
 
+export type CommandEvent = {
+  update: Update,
+  command: string,
+  args?: string,
+};
+
+
 export type Update = {
   update_id: number,
   message?: Message,

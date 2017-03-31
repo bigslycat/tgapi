@@ -11,6 +11,7 @@ Telegram bot API. Flow-compatible. Without unnecessary explicit dependencies in 
   - [`commandReceived`](#commandreceived-event)
   - [`commandReceived/<command>`](#commandreceivedcommand-event)
 - [Types](#types)
+  - [`CommandEvent`](#commandevent-type)
 - [Native API methods support](#native-api-methods-support)
 
 ## Installation

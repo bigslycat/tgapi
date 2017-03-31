@@ -35,7 +35,8 @@
   },
   "dependencies": {
     "bluebird": "3.5.0",
-    "node-fetch": "1.6.3"
+    "node-fetch": "1.6.3",
+    "reselect": "3.0.0"
   },
   "devDependencies": {
     "babel-cli": "6.24.0",

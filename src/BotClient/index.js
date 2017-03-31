@@ -2,6 +2,7 @@
 
 import EventEmitter from 'events';
 
+import onUpdateReceived from './onUpdateReceived';
 import getLastUpdateId from './getLastUpdateId';
 
 import type {
@@ -72,6 +73,8 @@ class BotClient extends EventEmitter {
       token: { value: token, enumerable: true },
       sendRequest: { value: sendRequest, enumerable: true },
     });
+
+    this.on('updateReceived', onUpdateReceived);
   }
 
   async callMethod(methodName: MethodName, args?: SendRequestArgs) {

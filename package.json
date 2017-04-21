@@ -3,6 +3,9 @@
   "version": "0.1.1",
   "description": "Telegram bot API",
   "main": "lib/BotClient/index.js",
+  "engines": {
+    "node": ">=7.0.0"
+  },
   "files": [
     "README.md",
     "LICENSE.md",

@@ -16,9 +16,9 @@ export type CommandEvent = {
   args?: string,
 };
 
+export type Update = { update_id: number } & UpdateData;
 
-export type Update = {
-  update_id: number,
+export type UpdateData = {
   message?: Message,
   edited_message?: Message,
   channel_post?: Message,
@@ -28,8 +28,7 @@ export type Update = {
   callback_query?: CallbackQuery,
 };
 
-export type UpdateType = 'message' | 'edited_message' | 'channel_post' | 'edited_channel_post' |
-                         'inline_query' | 'chosen_inline_result' | 'callback_query';
+export type UpdateType = $Keys<UpdateData>;
 
 export type WebhookInfo = {
   url: string,

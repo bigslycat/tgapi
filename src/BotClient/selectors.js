@@ -3,6 +3,7 @@
 import { createSelector } from 'reselect';
 
 import type {
+  JSONData,
   UpdateType,
   Update,
   User,
@@ -141,4 +142,14 @@ export const getCallbackQuery =
 
 export const getCallbackQueryData =
   createSelector(getCallbackQuery, ({ data } = {}) => data);
+
+export const getCallbackQueryDataJSON =
+  createSelector(getCallbackQueryData, (data) => {
+    try {
+      // eslint-disable-next-line flowtype/no-weak-types
+      return (JSON.parse(((data): any)): JSONData);
+    } catch (e) {
+      return undefined;
+    }
+  });
 

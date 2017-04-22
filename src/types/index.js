@@ -10,6 +10,8 @@ import type {
   CallbackGame,
 } from './games';
 
+export type JSONData = null | string | number | Array<JSONData> | { [key: string]: JSONData };
+
 export type CommandEvent = {
   update: Update,
   command: string,

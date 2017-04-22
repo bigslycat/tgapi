@@ -28,7 +28,7 @@ type Entities = {
   pre: string[],
 };
 
-const botCommandArgsRegExp = /^([^\n])\n|$/g;
+const botCommandArgsRegExp = /^([^\n/#@])[\n/#@]|$/g;
 
 const entitiesReduser = messageText => (entities, entity) => {
   if (typeof messageText !== 'string') return entities;

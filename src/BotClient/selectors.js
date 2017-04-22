@@ -4,10 +4,10 @@ import { createSelector } from 'reselect';
 
 import type { Update, User, MessageEntity } from '../types';
 
-const getMessage = (update: Update) => update.message || null;
+export const getMessage = ({ message }: Update) => message;
 
 const getMessageText = createSelector(
-  getMessage, message => (message ? message.text : null),
+  getMessage, ({ text } = {}) => text,
 );
 
 const getMessageRawEntities = createSelector(

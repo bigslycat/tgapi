@@ -10,8 +10,12 @@ Telegram bot API. Flow-compatible. Without unnecessary explicit dependencies in 
   - [`updateReceived`](#updatereceived-event)
   - [`commandReceived`](#commandreceived-event)
   - [`commandReceived/<command>`](#commandreceivedcommand-event)
+  - [`inlineButtonPressed`](#inlinebuttonpressed-event)
+  - [`inlineButtonPressed/<buttonId>`](#inlinebuttonpressedbuttonid-event)
 - [Types](#types)
-  - [`CommandEvent`](#commandevent-type)
+  - [`CommandEvent`][CommandEvent]
+  - [`ButtonPressedEvent`][ButtonPressedEvent]
+  - [`CertainButtonPressedEvent`][CertainButtonPressedEvent]
 - [Native API methods support](#native-api-methods-support)
 
 ## Installation
@@ -90,17 +94,26 @@ Emitted each specific bot command. Receives [CommandEvent](#commandevent-type) t
 bot.on('commandReceived/start', sendHelloMessage);
 ```
 
+### `inlineButtonPressed` event
+
+Emitted each `callback_query` update. Receives [ButtonPressedEvent](#buttonpressedevent-type) type.
+
+### `inlineButtonPressed/<buttonId>` event
+
+Emitted each `callback_query` update with specified `buttonId`. Receives
+[CertainButtonPressedEvent](#certainbuttonpressedevent-type) type. For emit this event
+`callback_query.data` must be `JSON` object winth string or number `buttonId` property:
+
+```json
+{ "buttonId": 1,
+  "anyAnotherProprty": "value" }
+```
+
 ## Types
 
-### `CommandEvent` type
-
-```javascript
-type CommandEvent = {
-  update: Update,
-  command: string,
-  args?: string,
-};
-```
+- [`CommandEvent` type][CommandEvent]
+- [`ButtonPressedEvent` type][ButtonPressedEvent]
+- [`CertainButtonPressedEvent` type][CertainButtonPressedEvent]
 
 - `update` — [Update](https://core.telegram.org/bots/API#update)
 - `command` — Command text. For example `/say` for message `/say Hey you!`
@@ -139,3 +152,7 @@ type CommandEvent = {
 - [ ] `sendGame`
 - [ ] `setGameScore`
 - [ ] `getGameHighScores`
+
+[CommandEvent]: src/types/index.js#L15
+[ButtonPressedEvent]: src/types/index.js#L21
+[CertainButtonPressedEvent]: src/types/index.js#L26

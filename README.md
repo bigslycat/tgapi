@@ -112,12 +112,11 @@ Emitted each `callback_query` update with specified `buttonId`. Receives
 ## Types
 
 - [`CommandEvent` type][CommandEvent]
+  - `update` — [Update](https://core.telegram.org/bots/API#update)
+  - `command` — Command text. For example `/say` for message `/say Hey you!`
+  - `args` — Text after command. For example `Hey you!` for message `/say Hey you!`
 - [`ButtonPressedEvent` type][ButtonPressedEvent]
 - [`CertainButtonPressedEvent` type][CertainButtonPressedEvent]
-
-- `update` — [Update](https://core.telegram.org/bots/API#update)
-- `command` — Command text. For example `/say` for message `/say Hey you!`
-- `args` — Text after command. For example `Hey you!` for message `/say Hey you!`
 
 ## Native API methods support
 

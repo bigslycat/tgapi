@@ -22,6 +22,8 @@
   "scripts": {
     "lint": "eslint .",
     "flow": "flow",
+    "flow:v": "flow version",
+    "flow:i": "flow-typed install",
     "test": "jest --env=node",
     "prebuild": "yarn run lint && yarn run flow && yarn test",
     "build": "yarn run build:clean && yarn run build:src && yarn run build:import",
@@ -55,6 +57,7 @@
     "eslint-plugin-react": "^6.10.3",
     "flow-bin": "^0.44.2",
     "flow-copy-source": "^1.1.0",
+    "flow-typed": "^2.1.1",
     "husky": "^0.13.3",
     "jest": "^19.0.2",
     "shx": "^0.2.2"

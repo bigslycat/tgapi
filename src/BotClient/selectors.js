@@ -3,10 +3,20 @@
 import { createSelector } from 'reselect';
 
 import type {
+  UpdateType,
   Update,
   User,
   MessageEntity,
 } from '../types';
+
+const updateIdFilter = (key: string) => key !== 'update_id';
+const getUpdateDataKey = (update: Update): UpdateType => {
+  const keys: $Keys<Update>[] = Object.keys(update);
+  const filtered: UpdateType[] = keys.filter(updateIdFilter);
+  return filtered[0];
+};
+
+export const getUpdateType = createSelector(getUpdateDataKey, type => type);
 
 export const getMessage = ({ message }: Update) => message;
 

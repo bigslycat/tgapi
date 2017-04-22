@@ -134,3 +134,8 @@ export const getBold = createSelector(getMessageEntities, ({ bold }) => bold);
 export const getItalic = createSelector(getMessageEntities, ({ italic }) => italic);
 export const getCode = createSelector(getMessageEntities, ({ code }) => code);
 export const getPre = createSelector(getMessageEntities, ({ pre }) => pre);
+
+export const getCallbackQuery =
+  ({ callback_query: callbackQuery }: Update) =>
+    callbackQuery;
+

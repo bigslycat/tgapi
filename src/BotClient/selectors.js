@@ -2,7 +2,11 @@
 
 import { createSelector } from 'reselect';
 
-import type { Update, User, MessageEntity } from '../types';
+import type {
+  Update,
+  User,
+  MessageEntity,
+} from '../types';
 
 export const getMessage = ({ message }: Update) => message;
 

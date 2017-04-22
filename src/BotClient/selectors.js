@@ -139,3 +139,6 @@ export const getCallbackQuery =
   ({ callback_query: callbackQuery }: Update) =>
     callbackQuery;
 
+export const getCallbackQueryData =
+  createSelector(getCallbackQuery, ({ data } = {}) => data);
+

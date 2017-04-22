@@ -18,6 +18,17 @@ export type CommandEvent = {
   args?: string,
 };
 
+export type ButtonPressedEvent = {
+  update: Update,
+  callbackQuery: CallbackQuery,
+};
+
+export type CertainButtonPressedEvent = {
+  update: Update,
+  callbackQuery: CallbackQuery,
+  pressedInlineButtonId: string | number,
+};
+
 export type Update = { update_id: number } & UpdateData;
 
 export type UpdateData = {

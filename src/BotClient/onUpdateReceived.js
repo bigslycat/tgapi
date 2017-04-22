@@ -1,7 +1,10 @@
 /* @flow */
 
+import {
+  getBotCommands,
+} from './selectors';
+
 import onCommandReceived from './onCommandReceived';
-import { getBotCommands } from './selectors';
 import type { Update } from '../types';
 
 function onUpdateReceived(update: Update) {

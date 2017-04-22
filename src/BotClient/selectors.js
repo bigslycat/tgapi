@@ -153,3 +153,15 @@ export const getCallbackQueryDataJSON =
     }
   });
 
+export const getPressedInlineButtonId =
+  createSelector(
+    getCallbackQueryDataJSON,
+    data => (
+      data && (
+        typeof data.pressedInlineButtonId === 'string' ||
+        typeof data.pressedInlineButtonId === 'number'
+      ) ?
+        data.pressedInlineButtonId :
+        undefined
+    ),
+  );

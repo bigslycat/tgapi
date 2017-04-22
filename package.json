@@ -37,27 +37,27 @@
     "postversion": "npm publish && git push origin master --tags"
   },
   "dependencies": {
-    "bluebird": "3.5.0",
-    "node-fetch": "1.6.3",
-    "reselect": "3.0.0"
+    "bluebird": "^3.5.0",
+    "node-fetch": "^1.6.3",
+    "reselect": "^3.0.0"
   },
   "devDependencies": {
-    "babel-cli": "6.24.0",
-    "babel-eslint": "7.2.1",
-    "babel-plugin-transform-flow-strip-types": "6.22.0",
-    "babel-preset-env": "1.2.2",
-    "babel-preset-stage-0": "6.22.0",
-    "eslint": "3.18.0",
-    "eslint-config-airbnb": "14.1.0",
-    "eslint-plugin-flowtype": "2.30.4",
-    "eslint-plugin-import": "2.2.0",
-    "eslint-plugin-jsx-a11y": "4.0.0",
-    "eslint-plugin-react": "6.10.3",
-    "flow-bin": "0.42.0",
-    "flow-copy-source": "1.1.0",
-    "husky": "0.13.3",
-    "jest": "19.0.2",
-    "shx": "0.2.2"
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-flowtype": "^2.32.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "flow-bin": "^0.44.2",
+    "flow-copy-source": "^1.1.0",
+    "husky": "^0.13.3",
+    "jest": "^19.0.2",
+    "shx": "^0.2.2"
   },
   "repository": {
     "type": "git",

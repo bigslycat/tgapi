@@ -106,7 +106,7 @@ Emitted each `callback_query` update with specified `buttonId`. Receives
 
 ```json
 { "buttonId": 1,
-  "anyAnotherProprty": "value" }
+  "anyAnotherProperty": "value" }
 ```
 
 ## Types

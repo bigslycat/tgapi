@@ -86,7 +86,6 @@ to `0`, but it creates memory leak danger.
 
 ```javascript
 const predicate = (update) => (
-  update &&
   update.message &&
   update.message.text === 'Hello'
 );

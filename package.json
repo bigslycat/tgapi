@@ -1,6 +1,6 @@
 {
   "name": "tgapi",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Telegram bot API",
   "main": "lib/BotClient/index.js",
   "engines": {

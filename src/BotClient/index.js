@@ -3,10 +3,17 @@
 import EventEmitter from 'events';
 import Promise from 'bluebird';
 
+import {
+  getCallbackQuery,
+  getPressedInlineButtonId,
+} from './selectors';
+import createCertainButtonPressedEvent from './createCertainButtonPressedEvent';
 import onUpdateReceived from './onUpdateReceived';
 import getLastUpdateId from './getLastUpdateId';
 
 import type {
+  CertainButtonPressedEvent,
+  InlineKeyboardButton,
   Update, UpdateType, WebhookInfo, InputFile, User, Message, InlineKeyboardMarkup,
   ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply, UserProfilePhotos, Chat, ChatMember,
 } from '../types';
@@ -76,6 +83,22 @@ class BotClient extends EventEmitter {
     });
 
     this.on('updateReceived', onUpdateReceived);
+  }
+
+  createInlineButton(text: string, timeout: number) {
+    const reaction = this.createReaction(timeout);
+
+    return (buttonId: string | number = `${Date.now()}${Math.random()}`): {
+      markup: InlineKeyboardButton,
+      promise: global.Promise<CertainButtonPressedEvent>,
+    } => ({
+      markup: { text, callback_data: JSON.stringify({ buttonId }) },
+      promise: reaction(update => getPressedInlineButtonId(update) === buttonId)
+        .then(update =>
+          // eslint-disable-next-line flowtype/no-weak-types
+          createCertainButtonPressedEvent(update, (getCallbackQuery(update): any), buttonId),
+        ),
+    });
   }
 
   createReaction(timeout: number = 1000 * 60 * 5) {

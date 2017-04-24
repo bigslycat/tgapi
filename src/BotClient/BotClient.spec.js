@@ -7,12 +7,16 @@ import BotClient from './';
 import getLastUpdateId from './getLastUpdateId';
 import type { SetTimeout, ClearTimeout } from './';
 
+import createCertainButtonPressedEvent from './createCertainButtonPressedEvent';
+
 jest.useFakeTimers();
 
 declare var setInterval: SetTimeout;
 declare var clearInterval: ClearTimeout;
 
 jest.mock('./getLastUpdateId');
+jest.mock('./selectors');
+jest.mock('./createCertainButtonPressedEvent');
 
 type Descriptor = {
   writable: boolean,
@@ -129,6 +133,30 @@ const tests = [
       } catch (e) {
         expect(e).toEqual(new Error('timeout'));
       }
+    }],
+  ]],
+  ['createInlineButton', [
+    ['Creates a InlineKeyboardButton markup and Promice that pending the press event', async () => {
+      createCertainButtonPressedEvent.mockReturnValueOnce('CertainButtonPressedEvent');
+
+      const reaction = jest.fn().mockReturnValueOnce(Promise.resolve('UPDATE'));
+
+      const bot = {
+        createInlineButton: BotClient.prototype.createInlineButton,
+        createReaction: jest.fn().mockReturnValueOnce(reaction),
+      };
+
+      const result = bot.createInlineButton('text', 1)('buttonId');
+
+      expect(result).toHaveProperty('markup', {
+        text: 'text',
+        callback_data: JSON.stringify({ buttonId: 'buttonId' }),
+      });
+
+      expect(result).toHaveProperty('promise');
+      expect(result.promise).toBeInstanceOf(Promise);
+
+      expect(await result.promise).toEqual('CertainButtonPressedEvent');
     }],
   ]],
   ['callMethod', [

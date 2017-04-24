@@ -6,7 +6,9 @@ Telegram bot API. Flow-compatible. Without unnecessary explicit dependencies in 
 - [Usage](#usage)
   - [Advansed usage](#advansed-usage)
   - [Webhooks](#webhooks)
-- [Reaction Promises](#reaction-promises)
+- [BotClient methods](#botclient-methods)
+  - [`createReaction` method](#createreaction-method)
+  - [`createInlineButton` method](#createinlinebutton-method)
 - [Events](#events)
   - [`updateReceived`](#updatereceived-event)
   - [`commandReceived`](#commandreceived-event)
@@ -77,9 +79,11 @@ server.listen(80, () => console.log(
 bot.on('updateReceived', update => console.log(update));
 ```
 
-## Reaction Promises
+## BotClient methods
 
-A `BotClient` instance have the method `createReaction`. Method `createReaction` creates a promise
+### `createReaction` method
+
+Creates a promise
 that will be resolved if the update predicate returns `true` or will be rejected if the timeout has
 expired. Timeout default value is `300000` ms (5 min). You can disable timeout by setting this value
 to `0`, but it creates memory leak danger.
@@ -97,6 +101,48 @@ bot.createReaction(1000 * 60 * 10)(predicate)
     text: 'Hi!',
   }))
   .catch(() => console.log('Nobody wants to greet me. =('));
+```
+
+### `createInlineButton` method
+
+```javascript
+type CreateInlineButton =
+  (text: string, timeout?: number = 1000 * 60 * 5) =>
+    (buttonId?: string) => {
+      markup: InlineKeyboardButton,
+      promise: Promise<CertainButtonPressedEvent>,
+    };
+```
+
+Creates a [`InlineKeyboardButton`](https://core.telegram.org/bots/API#inlinekeyboardbutton) markup
+and Promice that pending the press event. Promise resolves with
+[`inlineButtonPressed/<buttonId>` event](#inlinebuttonpressedbuttonid-event):
+
+```javascript
+const createHelloButton = bot.createButton('Hi!', 1000 * 60 * 10);
+const createOkButton = bot.createButton('OK!');
+const createNoButton = bot.createButton('No, sorry.');
+
+const helloButton = createHelloButton(Math.random());
+const okButton = createOkButton();
+const noButton = createNoButton();
+
+bot.sendMessage({
+  chat_id, text: 'Hello?',
+  reply_markup: { inline_keyboard: [[helloButton.markup]] },
+});
+
+helloButton.promise
+  .then(() => bot.sendMessage({
+    chat_id, text: 'Let\'s talk?',
+    reply_markup: { inline_keyboard: [[
+      okButton.markup,
+      noButton.markup,
+    ]] },
+  }));
+
+okButton.promise.then(() => bot.sendMessage({ chat_id, text: 'What\'s your name?' }));
+noButton.promise.then(() => bot.sendMessage({ chat_id, text: 'OK... =(' }));
 ```
 
 ## Events

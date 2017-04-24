@@ -6,6 +6,7 @@ Telegram bot API. Flow-compatible. Without unnecessary explicit dependencies in 
 - [Usage](#usage)
   - [Advansed usage](#advansed-usage)
   - [Webhooks](#webhooks)
+- [Reaction Promises](#reaction-promises)
 - [Events](#events)
   - [`updateReceived`](#updatereceived-event)
   - [`commandReceived`](#commandreceived-event)
@@ -74,6 +75,29 @@ server.listen(80, () => console.log(
 ));
 
 bot.on('updateReceived', update => console.log(update));
+```
+
+## Reaction Promises
+
+A `BotClient` instance have the method `createReaction`. Method `createReaction` creates a promise
+that will be resolved if the update predicate returns `true` or will be rejected if the timeout has
+expired. Timeout default value is `300000` ms (5 min). You can disable timeout by setting this value
+to `0`, but it creates memory leak danger.
+
+```javascript
+const predicate = (update) => (
+  update &&
+  update.message &&
+  update.message.text === 'Hello'
+);
+
+                // Set timeout to 10 min
+bot.createReaction(1000 * 60 * 10)(predicate)
+  .then(update => bot.sendMessage({
+    chat_id: update.message.chat.id,
+    text: 'Hi!',
+  }))
+  .catch(() => console.log('Nobody wants to greet me. =('));
 ```
 
 ## Events

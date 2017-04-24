@@ -87,6 +87,50 @@ const tests = [
         .toEqual(createDescriptor({ enumerable: true, value: sendRequest }));
     }],
   ]],
+  ['createReaction', [
+    ['Creates a promise that will be resolved if the update predicate returns true', async () => {
+      const bot = {
+        createReaction: BotClient.prototype.createReaction,
+        on: jest.fn(),
+        removeListener: jest.fn(),
+      };
+
+      const predicate = jest.fn().mockReturnValueOnce(true);
+
+      const promise = bot.createReaction()(predicate);
+
+      const listener = bot.on.mock.calls[0][1];
+
+      listener('UPDATE');
+
+      const result = await promise;
+
+      expect(bot.on.mock.calls[0][0]).toBe('updateReceived');
+      expect(predicate).lastCalledWith('UPDATE');
+      expect(bot.on).lastCalledWith('updateReceived', listener);
+      expect(result).toBe('UPDATE');
+    }],
+    ['Creates a promise that will be rejected if the timeout has expired', async () => {
+      const bot = {
+        createReaction: BotClient.prototype.createReaction,
+        on: jest.fn(),
+        removeListener: jest.fn(),
+      };
+
+      const predicate = jest.fn().mockReturnValueOnce(true);
+
+      const promise = bot.createReaction()(predicate);
+
+      expect.assertions(1);
+      jest.runAllTimers();
+
+      try {
+        await promise;
+      } catch (e) {
+        expect(e).toEqual(new Error('timeout'));
+      }
+    }],
+  ]],
   ['callMethod', [
     ['Call any bot API method', async () => {
       const result = 'result';

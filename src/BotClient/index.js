@@ -1,6 +1,7 @@
 /* @flow */
 
 import EventEmitter from 'events';
+import Promise from 'bluebird';
 
 import onUpdateReceived from './onUpdateReceived';
 import getLastUpdateId from './getLastUpdateId';
@@ -28,9 +29,9 @@ export type ResponseSuccessful<R> = { ok: true, result: R };
 export type ResponseError = { ok: false, error_code: number, description: string };
 export type Response<R> = ResponseError | ResponseSuccessful<R>;
 export type ResponseResult<R> = R;
-export type ResponseResultPromise<R> = Promise<ResponseResult<R>>;
-export type ResponseSuccessfulPromise<R> = Promise<ResponseSuccessful<R>>;
-export type ResponsePromise<R> = Promise<Response<R>>;
+export type ResponseResultPromise<R> = global.Promise<ResponseResult<R>>;
+export type ResponseSuccessfulPromise<R> = global.Promise<ResponseSuccessful<R>>;
+export type ResponsePromise<R> = global.Promise<Response<R>>;
 
 // eslint-disable-next-line flowtype/no-weak-types
 export type SendRequestArgs = { [key: string]: any };
@@ -75,6 +76,27 @@ class BotClient extends EventEmitter {
     });
 
     this.on('updateReceived', onUpdateReceived);
+  }
+
+  createReaction(timeout: number = 1000 * 60 * 5) {
+    return (predicate: (update: Update) => boolean) => {
+      let listener;
+
+      const unsubscribe = () => this.removeListener('updateReceived', listener);
+
+      const promise = new Promise((resolve) => {
+        listener = (update: Update) => predicate(update) && resolve(update);
+        this.on('updateReceived', listener);
+      });
+
+      return (
+        timeout ?
+          promise
+            .timeout(timeout, 'timeout')
+            .catch((error) => { unsubscribe(); return Promise.reject(error) }) :
+          promise
+      ).then((update) => { unsubscribe(); return update });
+    };
   }
 
   async callMethod(methodName: MethodName, args?: SendRequestArgs) {

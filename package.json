@@ -22,6 +22,7 @@
   "scripts": {
     "lint": "eslint .",
     "flow": "flow",
+    "flow:c": "flow coverage --color",
     "flow:v": "flow version",
     "flow:i": "flow-typed install",
     "test": "jest --env=node",

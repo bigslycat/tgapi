@@ -24,7 +24,8 @@
     "postversion": "npm publish && git push origin master --tags"
   },
   "dependencies": {
-    "ramda": "^0.24.1"
+    "ramda": "^0.24.1",
+    "rxjs": "^5.4.3"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

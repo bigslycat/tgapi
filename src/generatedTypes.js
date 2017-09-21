@@ -2602,6 +2602,14 @@ export type InputMessageContent = (
 
 export interface BotAPIClient {
   /**
+   * Method getMe
+   *
+   * A simple method for testing your bot's auth token. Requires no parameters.
+   * Returns basic information about the bot in form of a User object.
+   */
+  getMe: () => Res<User>,
+
+  /**
    * Method getUpdates
    *
    * Use this method to receive incoming updates using long polling (wiki). An

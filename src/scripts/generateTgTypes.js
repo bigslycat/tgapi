@@ -156,6 +156,14 @@ getRawData()
           },
         ),
         ['export interface BotAPIClient {',
+          [
+            toJSDoc([
+              'Method getMe',
+              'A simple method for testing your bot\'s auth token. Requires no parameters. ' +
+              'Returns basic information about the bot in form of a User object.',
+            ], max, 2),
+            pad('getMe: () => Res<User>,'),
+          ].join('\n').concat('\n'),
           raw.map(
             (spec) => {
               if (typeof spec === 'string') return spec

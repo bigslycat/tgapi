@@ -1,4 +1,28 @@
+extends:
+  - airbnb-base
+  - plugin:flowtype/recommended
+
+plugins:
+  - flowtype
+
 rules:
+
+  no-console: off
+
+  no-multi-assign: off
+
+  semi:
+    - error
+    - never
+
+  consistent-return: off
+
+  no-unused-expressions: off
+
+  function-paren-newline:
+    - error
+    - consistent
+
 
   flowtype/boolean-style:
     - error
@@ -20,9 +44,8 @@ rules:
 
   flowtype/no-weak-types:
     - error
-    - any: true
-      Array: true
-      Object: true
+    - any: false
+      Object: false
       Function: true
 
   flowtype/object-type-delimiter:
@@ -36,7 +59,7 @@ rules:
 
   flowtype/semi:
     - error
-    - always
+    - never
 
   flowtype/space-after-type-colon:
     - error

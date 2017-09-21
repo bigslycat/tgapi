@@ -1,0 +1,11 @@
+extends: ../../.eslintrc.yml
+
+env:
+  node: false
+  browser: true
+  jquery: true
+
+rules:
+  import/no-extraneous-dependencies:
+    - error
+    - devDependencies: true

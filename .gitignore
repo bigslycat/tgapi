@@ -1,5 +1,7 @@
-/lib
 /node_modules
+/lib
 /coverage
 *.log
-/*.js
+*.log-*
+*.log.*
+*.log_*

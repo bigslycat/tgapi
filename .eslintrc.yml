@@ -11,6 +11,10 @@ rules:
 
   no-multi-assign: off
 
+  no-return-assign:
+    - error
+    - except-parens
+
   semi:
     - error
     - never

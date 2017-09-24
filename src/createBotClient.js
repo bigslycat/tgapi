@@ -1,5 +1,8 @@
 /* @flow */
 
+import fetch from 'node-fetch'
+import FormData from 'form-data'
+
 import getMethodURL from './helpers/getMethodURL'
 
 import type {
@@ -7,18 +10,35 @@ import type {
   BotAPIClient,
 } from './generatedTypes'
 
-export type SendRequest = (url: string, body?: Object) => Res<any>
-
 export interface Client extends BotAPIClient {
   +token: string,
 }
 
-export default (token: string, sendRequest: SendRequest): Client => {
+type RequestBody = { [prop: string]: any }
+
+const sendRequest =
+  async (url: string, body?: RequestBody): Res<any> => {
+    const options: any = { method: 'POST' }
+
+    if (body) {
+      const formData = new FormData()
+
+      Object.entries(body).forEach(
+        ([key, value]) => formData.append(key, value),
+      )
+
+      options.body = formData
+    }
+
+    return (await fetch(url, options)).json()
+  }
+
+export default (token: string): Client => {
   const getUrl = getMethodURL(token)
 
   const createMethod = (methodName: string) => {
     const url = getUrl(methodName)
-    return (params?: Object): Res<any> => sendRequest(url, params)
+    return (params?: RequestBody): Res<any> => sendRequest(url, params)
   }
 
   return {

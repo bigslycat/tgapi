@@ -111,7 +111,7 @@ export type Result<R> = {
 
 export type Res<T> = Promise<Result<T>>
 
-export type InputFile = ReadStream`
+export type InputFile = ReadStream | string`
 
 getRawData()
   .then(

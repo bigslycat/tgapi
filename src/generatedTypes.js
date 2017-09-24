@@ -2,6 +2,8 @@
 
 /* eslint no-use-before-define: off */
 
+/* :: import { ReadStream } from 'fs' */
+
 export type Result<R> = {
   ok: false,
   description: string,
@@ -14,7 +16,7 @@ export type Result<R> = {
 
 export type Res<T> = Promise<Result<T>>
 
-export type InputFile = any
+export type InputFile = ReadStream
 
 export type CallbackGame = any
 

@@ -97,7 +97,9 @@ const getGlue = ifElse(
   always(': '),
 )
 
-const result = `export type Result<R> = {
+const custom = `/* :: import { ReadStream } from 'fs' */
+
+export type Result<R> = {
   ok: false,
   description: string,
   error_code: number,
@@ -105,7 +107,11 @@ const result = `export type Result<R> = {
 } | {
   ok: true,
   result: R,
-}`
+}
+
+export type Res<T> = Promise<Result<T>>
+
+export type InputFile = ReadStream`
 
 getRawData()
   .then(
@@ -118,9 +124,7 @@ getRawData()
       const typedefs = [
         '/* @flow */',
         '/* eslint no-use-before-define: off */',
-        result,
-        'export type Res<T> = Promise<Result<T>>',
-        'export type InputFile = any',
+        custom,
         'export type CallbackGame = any',
         raw.map(
           (spec) => {

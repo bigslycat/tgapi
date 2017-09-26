@@ -13,7 +13,7 @@ export default (
     const pad = leftPad(indent)
 
     const formatted = text.map(
-      (row: string) => row.split(/\s+/).reduce(
+      (row: string) => row.split(/\s+/).filter(Boolean).reduce(
         (rows: string[], nextWord: string): string[] => {
           const lastRow = last(rows)
 

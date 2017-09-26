@@ -8,33 +8,38 @@ import isMethod from './isMethod'
 import type { SpecRawType, Spec } from '../types'
 
 export default (
-  ({ name, description: descRaw, fieldHeaders, fieldsData }: SpecRawType): Spec => {
-    const fields: any = zipToHeaders(fieldHeaders)(fieldsData)
-    const description = cutBr(descRaw)
+  { name,
+    description: descRaw,
+    fieldHeaders,
+    fieldsData,
+  }: SpecRawType,
+): Spec => {
+  const fields: any = zipToHeaders(fieldHeaders)(fieldsData)
+  const description = cutBr(descRaw)
 
-    if (isType(fieldHeaders)) {
-      return {
-        type: 'typedef',
-        name,
-        description,
-        fields,
-      }
-    }
-
-    if (isMethod(fieldHeaders)) {
-      return {
-        type: 'method',
-        name,
-        description,
-        fields,
-      }
-    }
-
+  if (isType(fieldHeaders)) {
     return {
-      type: 'unknown',
+      type: 'typedef',
       name,
       description,
       fields,
     }
   }
-)
+
+  if (isMethod(fieldHeaders)) {
+    return {
+      type: 'method',
+      name,
+      description,
+      fields,
+    }
+  }
+
+  return {
+    type: 'unknown',
+    name,
+    description,
+    fields,
+  }
+}
+

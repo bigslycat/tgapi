@@ -6,12 +6,13 @@ import { resolve } from 'path'
 // $FlowFixMe
 import { map, startsWith, always, ifElse, flatten } from 'ramda'
 
-import toJSDoc from '../helpers/toJSDoc'
-import leftPad from '../helpers/leftPad'
-import tgTypeToFlow from '../helpers/tgTypeToFlow'
 import getRawData from '../electron-runtime/getRawData'
-import getAbstractSpecType from '../helpers/getAbstractSpecType'
-import getAbstractSpecUnion from '../helpers/getAbstractSpecUnion'
+
+import toJSDoc from './helpers/toJSDoc'
+import leftPad from './helpers/leftPad'
+import tgTypeToFlow from './helpers/tgTypeToFlow'
+import getAbstractSpecType from './helpers/getAbstractSpecType'
+import getAbstractSpecUnion from './helpers/getAbstractSpecUnion'
 
 const generatedTypesPath = resolve(__dirname, '../generatedTypes.js')
 

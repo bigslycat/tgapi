@@ -5,7 +5,7 @@ import zipToHeaders from './zipToHeaders'
 import isType from './isType'
 import isMethod from './isMethod'
 
-import type { SpecRawType, Spec } from '../types'
+import type { SpecRawType, Spec } from '../../types'
 
 export default (
   { name,

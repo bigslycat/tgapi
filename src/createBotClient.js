@@ -3,8 +3,6 @@
 import fetch from 'node-fetch'
 import FormData from 'form-data'
 
-import getMethodURL from './helpers/getMethodURL'
-
 import type {
   Res,
   BotAPIClient,
@@ -34,6 +32,10 @@ const sendRequest =
 
     return (await fetch(url, options)).json()
   }
+
+const getMethodURL =
+  (token: string) => (methodName: string): string =>
+    `https://api.telegram.org/bot${token}/${methodName}`
 
 export default (token: string): Client => {
   const getUrl = getMethodURL(token)

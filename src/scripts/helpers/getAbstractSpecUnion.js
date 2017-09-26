@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { SpecRawUnion, UnionSpec } from '../types'
+import type { SpecRawUnion, UnionSpec } from '../../types'
 
 export default (
   ({ name, description, types }: SpecRawUnion): UnionSpec => ({

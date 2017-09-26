@@ -1,6 +1,6 @@
 /* @flow */
 
-import { Observable, Subject } from 'rxjs'
+import { Observable } from 'rxjs'
 
 import type {
   Update,
@@ -12,27 +12,82 @@ import type {
   PreCheckoutQuery,
 } from './generatedTypes'
 
-export type UpdateProp = (
+export type UpdateType = (
   'message' | 'edited_message' | 'channel_post' | 'edited_channel_post' |
   'inline_query' | 'chosen_inline_result' |
   'callback_query' | 'shipping_query' | 'pre_checkout_query'
 )
 
-export type MessageUpdate = { update_id: number, message: Message }
-export type EditedMessageUpdate = { update_id: number, edited_message: Message }
-export type ChannelPostUpdate = { update_id: number, channel_post: Message }
-export type EditedChannelPostUpdate = { update_id: number, edited_channel_post: Message }
-export type InlineQueryUpdate = { update_id: number, inline_query: InlineQuery }
-export type ChosenInlineResultUpdate =
-  { update_id: number, chosen_inline_result: ChosenInlineResult }
-export type CallbackQueryUpdate = { update_id: number, callback_query: CallbackQuery }
-export type ShippingQueryUpdate = { update_id: number, shipping_query: ShippingQuery }
-export type PreCheckoutQueryUpdate = { update_id: number, pre_checkout_query: PreCheckoutQuery }
+export type MessageUpdate = {
+  type: 'message',
+  update_id: number,
+  message: Message,
+}
+
+export type EditedMessageUpdate = {
+  type: 'edited_message',
+  update_id: number,
+  edited_message: Message,
+}
+
+export type ChannelPostUpdate = {
+  type: 'channel_post',
+  update_id: number,
+  channel_post: Message,
+}
+
+export type EditedChannelPostUpdate = {
+  type: 'edited_channel_post',
+  update_id: number,
+  edited_channel_post: Message,
+}
+
+export type InlineQueryUpdate = {
+  type: 'inline_query',
+  update_id: number,
+  inline_query: InlineQuery,
+}
+
+export type ChosenInlineResultUpdate = {
+  type: 'chosen_inline_result',
+  update_id: number,
+  chosen_inline_result: ChosenInlineResult,
+}
+
+export type CallbackQueryUpdate = {
+  type: 'callback_query',
+  update_id: number,
+  callback_query: CallbackQuery,
+}
+
+export type ShippingQueryUpdate = {
+  type: 'shipping_query',
+  update_id: number,
+  shipping_query: ShippingQuery,
+}
+
+export type PreCheckoutQueryUpdate = {
+  type: 'pre_checkout_query',
+  update_id: number,
+  pre_checkout_query: PreCheckoutQuery,
+}
+
+export type TypedUpdate = (
+  MessageUpdate |
+  EditedMessageUpdate |
+  ChannelPostUpdate |
+  EditedChannelPostUpdate |
+  InlineQueryUpdate |
+  ChosenInlineResultUpdate |
+  CallbackQueryUpdate |
+  ShippingQueryUpdate |
+  PreCheckoutQueryUpdate
+)
 
 export interface UpdateHandler {
     emit: (update: Update) => mixed,
 
-    update$: Subject<Update>,
+    update$: Observable<TypedUpdate>,
 
     message$: Observable<MessageUpdate>,
     editedMessage$: Observable<EditedMessageUpdate>,

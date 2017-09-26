@@ -1,6 +1,7 @@
 /* @flow */
 
-import http, { Server } from 'http'
+/* :: import { IncomingMessage, ServerResponse, Server } from 'http' */
+
 import { resolve } from 'url'
 
 import type { UpdateHandler } from './types'
@@ -8,7 +9,7 @@ import type { Result, Update } from './generatedTypes'
 
 import HTTPError from './HTTPError'
 
-interface HTTPServer extends Server {}
+/* :: interface HTTPServer extends Server {} */
 
 export default (
   bot: UpdateHandler,
@@ -20,7 +21,7 @@ export default (
 
     server.on(
       'request',
-      (req: http.IncomingMessage, res: http.ServerResponse) => {
+      (req: IncomingMessage, res: ServerResponse) => {
         try {
           if (req.method !== 'POST') {
             throw new HTTPError(

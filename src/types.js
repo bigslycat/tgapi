@@ -1,6 +1,6 @@
 /* @flow */
 
-import { Observable } from 'rxjs'
+/* :: import { Observable } from 'rxjs/Observable' */
 
 import type {
   Update,

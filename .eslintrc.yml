@@ -5,6 +5,10 @@ extends:
 plugins:
   - flowtype
 
+env:
+  node: true
+  browser: false
+
 rules:
 
   no-console: off
@@ -22,6 +26,10 @@ rules:
   consistent-return: off
 
   no-unused-expressions: off
+
+  object-curly-newline:
+    - error
+    - consistent: true
 
   function-paren-newline:
     - error

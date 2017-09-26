@@ -2618,7 +2618,7 @@ export interface BotAPIClient {
    * Use this method to receive incoming updates using long polling (wiki). An
    * Array of Update objects is returned.
    */
-  getUpdates: (params: {
+  getUpdates: (params?: {
     /**
      * Identifier of the first update to be returned. Must be greater by one
      * than the highest among the identifiers of previously received updates. By
@@ -3717,7 +3717,7 @@ export interface BotAPIClient {
    * (for inline bots). On success, if edited message is sent by the bot, the
    * edited Message is returned, otherwise True is returned.
    */
-  editMessageCaption: (params: {
+  editMessageCaption: (params?: {
     /**
      * Required if inline_message_id is not specified. Unique identifier for the
      * target chat or username of the target channel (in the format
@@ -3751,7 +3751,7 @@ export interface BotAPIClient {
    * or via the bot (for inline bots). On success, if edited message is sent by
    * the bot, the edited Message is returned, otherwise True is returned.
    */
-  editMessageReplyMarkup: (params: {
+  editMessageReplyMarkup: (params?: {
     /**
      * Required if inline_message_id is not specified. Unique identifier for the
      * target chat or username of the target channel (in the format

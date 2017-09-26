@@ -98,6 +98,17 @@ const getGlue = ifElse(
   always(': '),
 )
 
+const isAllOptional =
+  (fields: Array<{
+    description: string,
+    parameters: string,
+    required: string,
+    type: string,
+  }>) => fields.every(
+    ({ required }) =>
+      required !== 'Yes',
+  )
+
 const custom = `/* :: import { ReadStream } from 'fs' */
 
 export type Result<R> = {
@@ -176,7 +187,7 @@ getRawData()
               switch (spec.type) {
                 case 'method': return flatten([
                   toJSDoc([`Method ${spec.name}`, ...spec.description], max, 2),
-                  pad(`${spec.name}: (params: {`),
+                  pad(`${spec.name}: (params${isAllOptional(spec.fields) ? '?' : ''}: {`),
                   spec.fields.map(
                     ({ parameters: param, description, required, type }) => [
                       toJSDoc([description], max, 4),

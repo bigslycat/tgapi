@@ -16,19 +16,21 @@ export interface Client extends BotAPIClient {
 
 type RequestBody = { [prop: string]: any }
 
+const getMultipart = (body: RequestBody) => {
+  const mutipart = new FormData()
+
+  Object.entries(body).forEach(
+    ([key, value]) => mutipart.append(key, value),
+  )
+
+  return mutipart
+}
+
 const sendRequest =
   async (url: string, body?: RequestBody): Res<any> => {
-    const options: any = { method: 'POST' }
-
-    if (body) {
-      const formData = new FormData()
-
-      Object.entries(body).forEach(
-        ([key, value]) => formData.append(key, value),
-      )
-
-      options.body = formData
-    }
+    const options = body ?
+      { method: 'POST', body: getMultipart(body) } :
+      { method: 'POST' }
 
     return (await fetch(url, options)).json()
   }

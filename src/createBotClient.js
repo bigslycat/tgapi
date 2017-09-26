@@ -15,13 +15,13 @@ export interface Client extends BotAPIClient {
 type RequestBody = { [prop: string]: any }
 
 const getMultipart = (body: RequestBody) => {
-  const mutipart = new FormData()
+  const multipart = new FormData()
 
   Object.entries(body).forEach(
-    ([key, value]) => mutipart.append(key, value),
+    ([key, value]) => multipart.append(key, value),
   )
 
-  return mutipart
+  return multipart
 }
 
 const sendRequest =

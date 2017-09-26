@@ -85,8 +85,10 @@ export type TypedUpdate = (
 )
 
 export interface UpdateHandler {
-    emit: (update: Update) => mixed,
+  emit: (update: Update) => mixed,
+}
 
+export interface RxUpdateHandler extends UpdateHandler {
     update$: Observable<TypedUpdate>,
 
     message$: Observable<MessageUpdate>,

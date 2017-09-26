@@ -6,7 +6,7 @@ import type { Update } from './generatedTypes'
 
 import type {
   TypedUpdate,
-  UpdateHandler,
+  RxUpdateHandler,
   UpdateType,
 } from './types'
 
@@ -15,7 +15,7 @@ const filterByProp =
     (propName: UpdateType): any =>
       update$.filter(update => update.type === propName)
 
-export default (): UpdateHandler => {
+export default (): RxUpdateHandler => {
   const update$: Subject<Update> = new Subject()
 
   const typed$: Observable<TypedUpdate> = update$.map(

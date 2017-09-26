@@ -311,7 +311,8 @@ export type Message = {
    */
   video_note?: VideoNote,
   /**
-   * Optional. Caption for the document, photo or video, 0-200 characters
+   * Optional. Caption for the audio, document, photo, video or voice, 0-200
+   * characters
    */
   caption?: string,
   /**
@@ -405,7 +406,7 @@ export type Message = {
  * MessageEntity
  *
  * This object represents one special entity in a text message. For example,
- * hashtags, usernames, URLs, etc. 
+ * hashtags, usernames, URLs, etc.
  */
 export type MessageEntity = {
   /**
@@ -1054,7 +1055,7 @@ export type ChatMember = {
 /**
  * ResponseParameters
  *
- * Contains information about why a request was unsuccessfull.
+ * Contains information about why a request was unsuccessful.
  */
 export type ResponseParameters = {
   /**
@@ -2128,7 +2129,7 @@ export type InlineQueryResultCachedAudio = {
  * InputTextMessageContent
  *
  * Represents the content of a text message to be sent as the result of an
- * inline query. 
+ * inline query.
  */
 export type InputTextMessageContent = {
   /**
@@ -2150,7 +2151,7 @@ export type InputTextMessageContent = {
  * InputLocationMessageContent
  *
  * Represents the content of a location message to be sent as the result of an
- * inline query. 
+ * inline query.
  */
 export type InputLocationMessageContent = {
   /**
@@ -2167,7 +2168,7 @@ export type InputLocationMessageContent = {
  * InputVenueMessageContent
  *
  * Represents the content of a venue message to be sent as the result of an
- * inline query. 
+ * inline query.
  */
 export type InputVenueMessageContent = {
   /**
@@ -2196,7 +2197,7 @@ export type InputVenueMessageContent = {
  * InputContactMessageContent
  *
  * Represents the content of a contact message to be sent as the result of an
- * inline query. 
+ * inline query.
  */
 export type InputContactMessageContent = {
   /**
@@ -2217,7 +2218,7 @@ export type InputContactMessageContent = {
  * ChosenInlineResult
  *
  * Represents a result of an inline query that was chosen by the user and sent
- * to their chat partner. 
+ * to their chat partner.
  */
 export type ChosenInlineResult = {
   /**
@@ -3433,7 +3434,7 @@ export interface BotAPIClient {
    * Use this method to set a new profile photo for the chat. Photos can't be
    * changed for private chats. The bot must be an administrator in the chat for
    * this to work and must have the appropriate admin rights. Returns True on
-   * success. 
+   * success.
    */
   setChatPhoto: (params: {
     /**
@@ -3455,7 +3456,7 @@ export interface BotAPIClient {
    *
    * Use this method to delete a chat photo. Photos can't be changed for private
    * chats. The bot must be an administrator in the chat for this to work and
-   * must have the appropriate admin rights. Returns True on success. 
+   * must have the appropriate admin rights. Returns True on success.
    */
   deleteChatPhoto: (params: {
     /**
@@ -3473,7 +3474,7 @@ export interface BotAPIClient {
    *
    * Use this method to change the title of a chat. Titles can't be changed for
    * private chats. The bot must be an administrator in the chat for this to
-   * work and must have the appropriate admin rights. Returns True on success. 
+   * work and must have the appropriate admin rights. Returns True on success.
    */
   setChatTitle: (params: {
     /**
@@ -3492,7 +3493,7 @@ export interface BotAPIClient {
    *
    * Use this method to change the description of a supergroup or a channel. The
    * bot must be an administrator in the chat for this to work and must have the
-   * appropriate admin rights. Returns True on success. 
+   * appropriate admin rights. Returns True on success.
    */
   setChatDescription: (params: {
     /**
@@ -3511,7 +3512,7 @@ export interface BotAPIClient {
    *
    * Use this method to pin a message in a supergroup. The bot must be an
    * administrator in the chat for this to work and must have the appropriate
-   * admin rights. Returns True on success. 
+   * admin rights. Returns True on success.
    */
   pinChatMessage: (params: {
     /**
@@ -3535,7 +3536,7 @@ export interface BotAPIClient {
    *
    * Use this method to unpin a message in a supergroup chat. The bot must be an
    * administrator in the chat for this to work and must have the appropriate
-   * admin rights. Returns True on success. 
+   * admin rights. Returns True on success.
    */
   unpinChatMessage: (params: {
     /**

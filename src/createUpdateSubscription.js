@@ -1,6 +1,7 @@
 /* @flow */
 
-import { Observable, Subscription } from 'rxjs'
+import { Observable } from 'rxjs/Observable'
+/* :: import { Subscription } from 'rxjs/Subscription' */
 
 import { Client } from './createBotClient'
 
@@ -8,12 +9,13 @@ import type { UpdateHandler } from './types'
 
 export default (
   { emit }: UpdateHandler,
-  client: Client,
+  { getUpdates }: Client,
   interval: number = 1000,
 ): Subscription =>
   Observable
     .interval(interval)
-    .map(() => client.getUpdates({}))
+    .mapTo(undefined)
+    .map(getUpdates)
     .subscribe(
       resPromise => resPromise.then(
         response => response.ok &&

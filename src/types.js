@@ -1,6 +1,6 @@
 /* @flow */
 
-/* :: import { Observable } from 'rxjs/Observable' */
+/* :: import { Observable } from 'rxjs' */
 
 import type {
   Update,
@@ -11,6 +11,18 @@ import type {
   ShippingQuery,
   PreCheckoutQuery,
 } from './generatedTypes'
+
+export interface Observer<T> {
+  next(value: T): mixed;
+  error(error: any): mixed;
+  complete(): mixed;
+}
+
+export type PartialObserver<T> = {
+  next: (value: T) => mixed,
+  error?: (error: any) => mixed,
+  complete?: () => mixed,
+}
 
 export type UpdateType = (
   'message' | 'edited_message' | 'channel_post' | 'edited_channel_post' |
@@ -84,11 +96,7 @@ export type TypedUpdate = (
   PreCheckoutQueryUpdate
 )
 
-export interface UpdateHandler {
-  emit: (update: Update) => mixed,
-}
-
-export interface RxUpdateHandler extends UpdateHandler {
+export interface RxUpdateHandler extends Observer<Update> {
     update$: Observable<TypedUpdate>,
 
     message$: Observable<MessageUpdate>,

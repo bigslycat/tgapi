@@ -4,7 +4,7 @@
 
 import { resolve } from 'url'
 
-import type { UpdateHandler } from './types'
+import type { PartialObserver } from './types'
 import type { Result, Update } from './generatedTypes'
 
 import HTTPError from './HTTPError'
@@ -12,7 +12,7 @@ import HTTPError from './HTTPError'
 /* :: interface HTTPServer extends Server {} */
 
 export default (
-  bot: UpdateHandler,
+  bot$: PartialObserver<Update>,
   path: string = '',
   onError?: (error: HTTPError) => any,
 ) =>
@@ -41,7 +41,11 @@ export default (
           req.on('end', () => {
             try {
               const request: Result<Update[]> = JSON.parse(data)
-              if (request.ok) request.result.forEach(bot.emit)
+              if (request.ok) {
+                request.result.forEach(
+                  update => bot$.next(update),
+                )
+              }
             } finally {
               res.end()
             }

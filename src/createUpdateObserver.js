@@ -1,8 +1,7 @@
 /* @flow */
 
 import { values } from 'ramda'
-import { Subject } from 'rxjs/Subject'
-/* :: import { Observable } from 'rxjs/Observable' */
+import { Observable, Subject } from 'rxjs'
 
 import type { Update } from './generatedTypes'
 
@@ -20,42 +19,43 @@ import type {
   PreCheckoutQueryUpdate,
 } from './types'
 
-type Filter = (update$: Subject<Update>) => (propName: UpdateType) => any
+interface Streams {
+  message$: Observable<MessageUpdate>,
+  editedMessage$: Observable<EditedMessageUpdate>,
+  channelPost$: Observable<ChannelPostUpdate>,
+  editedChannelPost$: Observable<EditedChannelPostUpdate>,
+  inlineQuery$: Observable<InlineQueryUpdate>,
+  chosenInlineResult$: Observable<ChosenInlineResultUpdate>,
+  callbackQuery$: Observable<CallbackQueryUpdate>,
+  shippingQuery$: Observable<ShippingQueryUpdate>,
+  preCheckoutQuery$: Observable<PreCheckoutQueryUpdate>,
+}
 
-const filterByProp: Filter =
-  update$ => type =>
-    update$
-      .filter(update => !!update[type])
-      .distinctUntilKeyChanged('update_id')
-      .map(({ update_id, ...update }) => ({
-        update_id, type, [type]: update[type],
-      }))
+const filterByProp =
+  (update$: Subject<Update>) =>
+    (type: UpdateType): Observable<any> =>
+      update$
+        .filter(update => !!update[type])
+        .distinctUntilKeyChanged('update_id')
+        .map(({ update_id, ...update }) => ({
+          update_id, type, [type]: update[type],
+        }))
 
 export default (): RxUpdateHandler => {
   const update$: Subject<Update> = new Subject()
 
   const filterBy = filterByProp(update$)
 
-  const message$: Observable<MessageUpdate> = filterBy('message')
-  const editedMessage$: Observable<EditedMessageUpdate> = filterBy('edited_message')
-  const channelPost$: Observable<ChannelPostUpdate> = filterBy('channel_post')
-  const editedChannelPost$: Observable<EditedChannelPostUpdate> = filterBy('edited_channel_post')
-  const inlineQuery$: Observable<InlineQueryUpdate> = filterBy('inline_query')
-  const chosenInlineResult$: Observable<ChosenInlineResultUpdate> = filterBy('chosen_inline_result')
-  const callbackQuery$: Observable<CallbackQueryUpdate> = filterBy('callback_query')
-  const shippingQuery$: Observable<ShippingQueryUpdate> = filterBy('shipping_query')
-  const preCheckoutQuery$: Observable<PreCheckoutQueryUpdate> = filterBy('pre_checkout_query')
-
-  const streams = {
-    message$,
-    editedMessage$,
-    channelPost$,
-    editedChannelPost$,
-    inlineQuery$,
-    chosenInlineResult$,
-    callbackQuery$,
-    shippingQuery$,
-    preCheckoutQuery$,
+  const streams: Streams = {
+    message$: filterBy('message'),
+    editedMessage$: filterBy('edited_message'),
+    channelPost$: filterBy('channel_post'),
+    editedChannelPost$: filterBy('edited_channel_post'),
+    inlineQuery$: filterBy('inline_query'),
+    chosenInlineResult$: filterBy('chosen_inline_result'),
+    callbackQuery$: filterBy('callback_query'),
+    shippingQuery$: filterBy('shipping_query'),
+    preCheckoutQuery$: filterBy('pre_checkout_query'),
   }
 
   return {

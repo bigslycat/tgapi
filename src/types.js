@@ -13,9 +13,9 @@ import type {
 } from './generatedTypes'
 
 export interface Observer<T> {
-  next(value: T): mixed;
-  error(error: any): mixed;
-  complete(): mixed;
+  next: (value: T) => mixed,
+  error: (error: any) => mixed,
+  complete: () => mixed,
 }
 
 export type PartialObserver<T> = {

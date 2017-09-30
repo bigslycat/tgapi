@@ -1,7 +1,7 @@
 {
   "name": "tgapi",
   "version": "0.4.0",
-  "description": "Telegram bot API",
+  "description": "Actual Telegram bot API with Rx-driven updates and full Flow type coverage",
   "main": "lib/index.js",
   "engines": {
     "node": ">=6.0.0"
@@ -57,7 +57,12 @@
     "bot",
     "bots",
     "Telegram",
-    "tg"
+    "tg",
+    "rx",
+    "rxjs",
+    "reactive",
+    "flow",
+    "flowtype"
   ],
   "author": {
     "name": "Pavel Tereschenko",

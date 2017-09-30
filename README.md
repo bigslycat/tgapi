@@ -113,8 +113,8 @@ server.listen(3000)
 #### Rx
 
 Obviously, you can use any observer for handling updates. For example, the instance of the
-[Subject][] from rxjs. In addition, there is another tool that can simplify the work with updates
-in the [Observable streams][rx]:
+[Subject][] from [rxjs][]. In addition, there is another tool that can simplify the work with
+updates in the [Observable streams][rx]:
 
 `createUpdateObserver() => UpdateObserver`
 
@@ -162,3 +162,4 @@ following values:
 [Subject]: http://reactivex.io/rxjs/class/es6/Subject.js~Subject.html
 [rx]: http://reactivex.io/
 [Flow]: https://flow.org/
+[rxjs]: https://github.com/ReactiveX/rxjs

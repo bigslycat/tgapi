@@ -13,7 +13,7 @@ import HTTPError from './HTTPError'
 /* :: interface HTTPServer extends Server {} */
 
 const createErrorHandler =
-  (res: ServerResponse, onError: ?(error: HTTPError) => any) =>
+  (bot: PartialObserver<Update>, res: ServerResponse) =>
     (err: HTTPError) => {
       const error = HTTPError.fromCatch(err)
 
@@ -22,21 +22,17 @@ const createErrorHandler =
 
       res.end()
 
-      onError && onError(error)
+      bot.error && bot.error(error)
     }
 
-export default (
-  bot$: PartialObserver<Update>,
-  path: string = '',
-  onError?: (error: HTTPError) => any,
-) =>
+export default (bot: PartialObserver<Update>, path: string = '') =>
   (server: HTTPServer): void => {
     const url = resolve('/', path)
 
     server.on(
       'request',
       (req: IncomingMessage, res: ServerResponse) => {
-        const handleError = createErrorHandler(res, onError)
+        const handleError = createErrorHandler(bot, res)
 
         if (req.method !== 'POST') {
           handleError(new HTTPError(
@@ -58,7 +54,7 @@ export default (
 
               if (!isValidUpdate(update)) throw new HTTPError(400, 'Bad request')
 
-              bot$.next(update)
+              bot.next(update)
               res.end()
             } catch (e) {
               handleError(e)

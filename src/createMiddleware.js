@@ -2,10 +2,12 @@
 
 import bodyParser from 'body-parser'
 
-import type { UpdateObserver } from './types'
+import type { PartialObserver } from './types'
+import type { Update } from './generatedTypes'
 import isValidUpdate from './util/isValidUpdate'
+import HTTPError from './HTTPError'
 
-export default (observer: UpdateObserver) => {
+export default (observer: PartialObserver<Update>) => {
   const parserMiddleware = bodyParser.json()
 
   const botMiddlware =
@@ -16,7 +18,7 @@ export default (observer: UpdateObserver) => {
         return
       }
 
-      observer.error(new Error('Invalid update'))
+      if (observer.error) observer.error(new HTTPError(400, 'Invalid update'))
       res.status(400).send('Bad Request')
     }
 

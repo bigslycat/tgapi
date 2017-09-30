@@ -5,11 +5,25 @@
 import { resolve } from 'url'
 
 import type { PartialObserver } from './types'
-import type { Result, Update } from './generatedTypes'
+import type { Update } from './generatedTypes'
 
+import isValidUpdate from './util/isValidUpdate'
 import HTTPError from './HTTPError'
 
 /* :: interface HTTPServer extends Server {} */
+
+const createErrorHandler =
+  (res: ServerResponse, onError: ?(error: HTTPError) => any) =>
+    (err: HTTPError) => {
+      const error = HTTPError.fromCatch(err)
+
+      res.statusCode = error.httpStatusCode
+      res.statusMessage = error.httpStatusMessage
+
+      res.end()
+
+      onError && onError(error)
+    }
 
 export default (
   bot$: PartialObserver<Update>,
@@ -22,44 +36,34 @@ export default (
     server.on(
       'request',
       (req: IncomingMessage, res: ServerResponse) => {
-        try {
-          if (req.method !== 'POST') {
-            throw new HTTPError(
-              req.url === url ? 405 : 501,
-              `Invalid ${req.method} request to ${req.url}`,
-            )
-          }
+        const handleError = createErrorHandler(res, onError)
 
-          if (req.url !== url) {
-            throw new HTTPError(404, `Invalid ${req.method} request to ${req.url}`)
-          }
-
+        if (req.method !== 'POST') {
+          handleError(new HTTPError(
+            req.url === url ? 405 : 501,
+            `Invalid ${req.method} request to ${req.url}`,
+          ))
+        } else if (req.url !== url) {
+          handleError(new HTTPError(
+            404, `Invalid ${req.method} request to ${req.url}`,
+          ))
+        } else {
           let data = ''
 
           req.on('data', newData => (data += newData || ''))
 
           req.on('end', () => {
             try {
-              const request: Result<Update[]> = JSON.parse(data)
-              if (request.ok) {
-                request.result.forEach(
-                  update => bot$.next(update),
-                )
-              }
-            } finally {
+              const update: any = JSON.parse(data)
+
+              if (!isValidUpdate(update)) throw new HTTPError(400, 'Bad request')
+
+              bot$.next(update)
               res.end()
+            } catch (e) {
+              handleError(e)
             }
           })
-        } catch (e) {
-          const error = HTTPError.fromCatch(e)
-
-          res.statusCode = error.httpStatusCode
-          res.statusMessage = error.httpStatusMessage
-          res.end()
-
-          onError && onError(
-            HTTPError.fromCatch(e),
-          )
         }
       },
     )

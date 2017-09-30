@@ -96,7 +96,7 @@ export type TypedUpdate = (
   PreCheckoutQueryUpdate
 )
 
-export interface RxUpdateHandler extends Observer<Update> {
+export interface UpdateObserver extends Observer<Update> {
     update$: Observable<TypedUpdate>,
 
     message$: Observable<MessageUpdate>,

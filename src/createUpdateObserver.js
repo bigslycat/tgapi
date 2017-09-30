@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs'
 import type { Update } from './generatedTypes'
 
 import type {
-  RxUpdateHandler,
+  UpdateObserver,
   UpdateType,
   MessageUpdate,
   EditedMessageUpdate,
@@ -41,7 +41,7 @@ const filterByProp =
           update_id, type, [type]: update[type],
         }))
 
-export default (): RxUpdateHandler => {
+export default (): UpdateObserver => {
   const update$: Subject<Update> = new Subject()
 
   const filterBy = filterByProp(update$)

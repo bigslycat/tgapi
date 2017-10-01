@@ -46,8 +46,8 @@ bot.getUpdates({ offset: 100500 })
 ```
 
 `sendRequest` is the default implementation of the method of sending http requests to Telegram
-server. You can to use another. `sendRequest` must receive the bot token as first argument and
-Telegram API method parameters and must returns `Promise`.
+server. You can use another. `sendRequest` must receive the bot token as first argument and
+Telegram API method parameters and must return `Promise`.
 
 ### Advansed usage
 
@@ -94,7 +94,7 @@ const predicate = (update) => (
   update.message.text === 'Hello'
 );
 
-                // Set timeout to 10 min
+// Set timeout to 10 min
 bot.createReaction(1000 * 60 * 10)(predicate)
   .then(update => bot.sendMessage({
     chat_id: update.message.chat.id,
@@ -114,8 +114,8 @@ type CreateInlineButton =
     };
 ```
 
-Creates a [`InlineKeyboardButton`](https://core.telegram.org/bots/API#inlinekeyboardbutton) markup
-and Promice that pending the press event. Promise resolves with
+Creates an [`InlineKeyboardButton`](https://core.telegram.org/bots/API#inlinekeyboardbutton) markup
+and Promise pending the press event. Promise resolves with
 [`inlineButtonPressed/<buttonId>` event](#inlinebuttonpressedbuttonid-event):
 
 ```javascript
@@ -149,15 +149,15 @@ noButton.promise.then(() => bot.sendMessage({ chat_id, text: 'OK... =(' }));
 
 ### `updateReceived` event
 
-Emitted each any update. Receives [Update](https://core.telegram.org/bots/API#update) type.
+Emitted when any update is received. Has [Update](https://core.telegram.org/bots/API#update) type.
 
 ### `commandReceived` event
 
-Emitted each any bot command. Receives [CommandEvent](#commandevent-type) type.
+Emitted when any bot command is received. Has [CommandEvent](#commandevent-type) type.
 
 ### `commandReceived/<command>` event
 
-Emitted each specific bot command. Receives [CommandEvent](#commandevent-type) type. Example:
+Emitted when specific bot command is received. Has [CommandEvent](#commandevent-type) type. Example:
 
 ```javascript
 bot.on('commandReceived/start', sendHelloMessage);
@@ -165,12 +165,12 @@ bot.on('commandReceived/start', sendHelloMessage);
 
 ### `inlineButtonPressed` event
 
-Emitted each `callback_query` update. Receives [ButtonPressedEvent](#buttonpressedevent-type) type.
+Emitted on each `callback_query` update. Has [ButtonPressedEvent](#buttonpressedevent-type) type.
 
 ### `inlineButtonPressed/<buttonId>` event
 
-Emitted each `callback_query` update with specified `buttonId`. Receives
-[CertainButtonPressedEvent](#certainbuttonpressedevent-type) type. For emit this event
+Emitted on each `callback_query` update with specified `buttonId`. Has
+[CertainButtonPressedEvent](#certainbuttonpressedevent-type) type. To emit this event
 `callback_query.data` must be `JSON` object winth string or number `buttonId` property:
 
 ```json
@@ -182,8 +182,8 @@ Emitted each `callback_query` update with specified `buttonId`. Receives
 
 - [`CommandEvent` type][CommandEvent]
   - `update` — [Update](https://core.telegram.org/bots/API#update)
-  - `command` — Command text. For example `/say` for message `/say Hey you!`
-  - `args` — Text after command. For example `Hey you!` for message `/say Hey you!`
+  - `command` — Command text. E.g. `/say` for message `/say Hey you!`
+  - `args` — Text after command. E.g. `Hey you!` for message `/say Hey you!`
 - [`ButtonPressedEvent` type][ButtonPressedEvent]
 - [`CertainButtonPressedEvent` type][CertainButtonPressedEvent]
 

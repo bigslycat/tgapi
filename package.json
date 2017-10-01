@@ -2,11 +2,24 @@
   "name": "tgapi",
   "version": "0.4.0",
   "description": "Actual Telegram bot API with Rx-driven updates and full Flow type coverage",
-  "main": "lib/index.js",
+  "main": "lib/bundle.js",
   "engines": {
     "node": ">=6.0.0"
   },
   "files": [
+    "README.md",
+    "LICENSE.md",
+    "lib",
+    "src/util",
+    "src/createBotClient.js",
+    "src/createMiddleware.js",
+    "src/createUpdateObserver.js",
+    "src/createUpdateSubscription.js",
+    "src/generatedTypes.js",
+    "src/HTTPError.js",
+    "src/index.js",
+    "src/setWebhookToServer.js",
+    "src/types.js"
   ],
   "scripts": {
     "lint": "eslint .",

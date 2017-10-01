@@ -15,13 +15,12 @@
     "pretyped": "shx rm -rf flow-typed/npm",
     "typed": "flow-typed update",
     "posttyped": "flow-typed install jquery@3.2.1",
-    "script": "NODE_ENV=script babel-node --",
+    "script": "babel-node --",
     "tg-types": "yarn script src/scripts/generateTgTypes",
-    "pretranspile": "yarn lint && yarn flow && yarn test",
-    "transpile": "shx rm -rf lib && babel src --out-dir lib --ignore spec.js,test.js",
-    "precommit": "yarn run pretranspile",
-    "preversion": "git checkout master && yarn run build",
-    "postversion": "npm publish && git push origin master --tags"
+    "transpile": "shx rm lib/bundle.js && rollup -c",
+    "precommit": "yarn lint && yarn flow && yarn test",
+    "preversion": "git checkout master && yarn precommit",
+    "postversion": "yarn transpile && npm publish && git push origin master --tags"
   },
   "dependencies": {
     "body-parser": "1.18.2",
@@ -34,6 +33,7 @@
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.0",
     "babel-plugin-ramda": "^1.4.3",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
@@ -46,6 +46,10 @@
     "husky": "^0.14.3",
     "jest": "^21.1.0",
     "nightmare": "^2.10.0",
+    "rollup": "0.50.0",
+    "rollup-plugin-babel": "3.0.2",
+    "rollup-plugin-commonjs": "8.2.1",
+    "rollup-plugin-node-resolve": "3.0.0",
     "shx": "^0.2.2"
   },
   "repository": {

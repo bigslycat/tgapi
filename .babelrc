@@ -1,14 +1,7 @@
 {
   "presets": [
     "flow",
-    ["env", { "node": 6 }],
+    ["env", { "targets": { "node": "current" } }],
     "stage-0"
-  ],
-  "env": {
-    "script": {
-      "presets": [
-        ["env", { "node": "current" }]
-      ]
-    }
-  }
+  ]
 }

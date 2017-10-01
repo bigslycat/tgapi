@@ -1,226 +1,165 @@
 # tgapi
 
-Telegram bot API. Flow-compatible. Without unnecessary explicit dependencies in runtime.
-
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Advansed usage](#advansed-usage)
-  - [Webhooks](#webhooks)
-- [BotClient methods](#botclient-methods)
-  - [`createReaction` method](#createreaction-method)
-  - [`createInlineButton` method](#createinlinebutton-method)
-- [Events](#events)
-  - [`updateReceived`](#updatereceived-event)
-  - [`commandReceived`](#commandreceived-event)
-  - [`commandReceived/<command>`](#commandreceivedcommand-event)
-  - [`inlineButtonPressed`](#inlinebuttonpressed-event)
-  - [`inlineButtonPressed/<buttonId>`](#inlinebuttonpressedbuttonid-event)
-- [Types](#types)
-  - [`CommandEvent`][CommandEvent]
-  - [`ButtonPressedEvent`][ButtonPressedEvent]
-  - [`CertainButtonPressedEvent`][CertainButtonPressedEvent]
-- [Native API methods support](#native-api-methods-support)
+Actual Telegram bot API with Rx-driven updates and full Flow type coverage
 
 ## Installation
 
-```
-npm install --save tgapi
-```
+- npm: `npm install --save tgapi`
+- yarn: `yarn add tgapi`
 
 ## Usage
 
-```javascript
+### Calling bot API methods
 
-import BotClient from 'tgapi';
-import sendRequest from 'tgapi/sendRequest';
+In order to send requests to API, we need to create the API client instance.
+To do this, you need to use the `createBotClient` function:
 
-const token = 'bla-bla-bla';
+`createBotClient(token: string) => Client`
 
-const bot = new BotClient(token, sendRequest);
+The `Client` is an object that contains the immutable `token` property and
+[all bot API methods][Available methods]. Each method returns a promise, on successful execution of
+which the result will be the response object of the API server [described][Making requests] in the
+documentation.
 
-bot.getMe()
-  .then(userObject => console.log(userObject));
-
-bot.getUpdates({ offset: 100500 })
-  .then(updatesArray => console.log(updatesArray));
-```
-
-`sendRequest` is the default implementation of the method of sending http requests to Telegram
-server. You can use another. `sendRequest` must receive the bot token as first argument and
-Telegram API method parameters and must return `Promise`.
-
-### Advansed usage
+In this example, we call [getMe][] and [sendPhoto][] methods:
 
 ```javascript
-bot.on('updateReceived', update => console.log(update));
+const tg = require('tgapi')
+const fs = require('fs')
 
-bot.startWatchUpdates(1);
-// Will check updates each 1 second and emit updateReceived event
-// after each one update.
+const client = tg.createBotClient('<your bot token>')
+
+client
+  .getMe()
+  .then(console.log)
+
+  // { ok: true,
+  //   result: {
+  //     id: 12345,
+  //     is_bot: true,
+  //     first_name: "My awesome bot",
+  //     username: "myawesomebot" } }
+
+const chat_id = 100500
+const photo = fs.createReadStream('./path/to/photo.jpg')
+
+client
+  .sendPhoto({ chat_id, photo })
+  .then(console.log)
+
+  // { ok: true, result: { Message object } }
 ```
 
-### Webhooks
+Etc. for all other [methods][Available methods].
 
-If you want to use webhooks, you can use this http-server:
+### Working with updates
+
+#### Long polling
+
+`createUpdateSubscription(client, observer, options?: Options) => unsubscribeFn`
+
+- `client` — *required* bot api client instance
+- `observer` — *required* `Object`
+  - `observer.next` — *required* `Function`, receives [Update][] object
+  - `observer.error` — *optional* `Function`, receives error
+- `options` — *optional* `Object`
+  - `options.timeout` — *optional* `number`, long polling [timeout][getUpdates]
+  - `options.allowedUpdates` — *optional* `Array<string>`, allowed [update types][getUpdates]
 
 ```javascript
-import BotClient from 'tgapi';
-import sendRequest from 'tgapi/sendRequest';
-import pureServer from 'tgapi/pureServer';
+const observer = {
+  next: update => console.log('Update id is', update.update_id),
+  error: console.error,
+}
 
-const bot = new BotClient('your token', sendRequest);
+const options = {
+  timeout: 2,
+  allowedUpdates: [
+    'message',
+    'edited_message',
+  ],
+}
 
-const server = pureServer(bot, 'your/webhook/path');
-
-server.listen(80, () => console.log(
-  'Webhook are available on http://localhost/your/webhook/path'
-));
-
-bot.on('updateReceived', update => console.log(update));
+const unsubscribe = tg.createUpdateSubscription(client, observer, options)
 ```
 
-## BotClient methods
+#### [Express][] or [Connect][] middleware
 
-### `createReaction` method
+`createMiddleware(observer)`
 
-Creates a promise
-that will be resolved if the update predicate returns `true` or will be rejected if the timeout has
-expired. Timeout default value is `300000` ms (5 min). You can disable timeout by setting this value
-to `0`, but it creates memory leak danger.
+- `observer` — *required* `Object`
+  - `observer.next` — *required* `Function`, receives [Update][] object
+  - `observer.error` — *optional* `Function`, receives error
 
 ```javascript
-const predicate = (update) => (
-  update.message &&
-  update.message.text === 'Hello'
-);
+const app = express()
 
-// Set timeout to 10 min
-bot.createReaction(1000 * 60 * 10)(predicate)
-  .then(update => bot.sendMessage({
-    chat_id: update.message.chat.id,
-    text: 'Hi!',
-  }))
-  .catch(() => console.log('Nobody wants to greet me. =('));
+app.post(
+  '/secret/bot/path',
+  tg.createMiddleware(observer),
+)
+
+app.listen(3000)
 ```
 
-### `createInlineButton` method
+#### Pure node [HTTP][] server
 
 ```javascript
-type CreateInlineButton =
-  (text: string, timeout?: number = 1000 * 60 * 5) =>
-    (buttonId?: string) => {
-      markup: InlineKeyboardButton,
-      promise: Promise<CertainButtonPressedEvent>,
-    };
+const server = tg.createWebhookServer(observer, '/secret/bot/path')
+
+server.listen(3000)
 ```
 
-Creates an [`InlineKeyboardButton`](https://core.telegram.org/bots/API#inlinekeyboardbutton) markup
-and Promise pending the press event. Promise resolves with
-[`inlineButtonPressed/<buttonId>` event](#inlinebuttonpressedbuttonid-event):
+#### Rx
 
-```javascript
-const createHelloButton = bot.createButton('Hi!', 1000 * 60 * 10);
-const createOkButton = bot.createButton('OK!');
-const createNoButton = bot.createButton('No, sorry.');
+Obviously, you can use any observer for handling updates. For example, the instance of the
+[Subject][] from [rxjs][]. In addition, there is another tool that can simplify the work with
+updates in the [Observable streams][rx]:
 
-const helloButton = createHelloButton(Math.random());
-const okButton = createOkButton();
-const noButton = createNoButton();
+`createUpdateObserver() => UpdateObserver`
 
-bot.sendMessage({
-  chat_id, text: 'Hello?',
-  reply_markup: { inline_keyboard: [[helloButton.markup]] },
-});
+##### UpdateObserver instance
 
-helloButton.promise
-  .then(() => bot.sendMessage({
-    chat_id, text: 'Let\'s talk?',
-    reply_markup: { inline_keyboard: [[
-      okButton.markup,
-      noButton.markup,
-    ]] },
-  }));
+100% [Flow][] coverage. Have methods `next`, `error`, `complete` like classic Observer.
+In addition, `UpdateObserver` have this `Observable` instances:
 
-okButton.promise.then(() => bot.sendMessage({ chat_id, text: 'What\'s your name?' }));
-noButton.promise.then(() => bot.sendMessage({ chat_id, text: 'OK... =(' }));
-```
+- `update$` — `Observable` of all types updates
+- `message$` — `Observable` of `message` updates
+- `editedMessage$` — `Observable` of `editedMessage` updates
+- `channelPost$` — `Observable` of `channelPost` updates
+- `editedChannelPost$` — `Observable` of `editedChannelPost` updates
+- `inlineQuery$` — `Observable` of `inlineQuery` updates
+- `chosenInlineResult$` — `Observable` of `chosenInlineResult` updates
+- `callbackQuery$` — `Observable` of `callbackQuery` updates
+- `shippingQuery$` — `Observable` of `shippingQuery` updates
+- `preCheckoutQuery$` — `Observable` of `preCheckoutQuery` updates
 
-## Events
+Each update in all Observables is supplemented by the `type` field, which can be one of the
+following values:
 
-### `updateReceived` event
+- `message`
+- `edited_message`
+- `channel_post`
+- `edited_channel_post`
+- `inline_query`
+- `chosen_inline_result`
+- `callback_query`
+- `shipping_query`
+- `pre_checkout_query`
 
-Emitted when any update is received. Has [Update](https://core.telegram.org/bots/API#update) type.
+[API]: https://core.telegram.org/bots/API
+[Making requests]: https://core.telegram.org/bots/API#making-requests
+[Available methods]: https://core.telegram.org/bots/API#available-methods
+[getMe]: https://core.telegram.org/bots/API#getme
+[getUpdates]: https://core.telegram.org/bots/API#getupdates
+[sendPhoto]: https://core.telegram.org/bots/API#sendphoto
+[Update]: https://core.telegram.org/bots/API#update
 
-### `commandReceived` event
+[Express]: https://github.com/expressjs/express
+[Connect]: https://github.com/senchalabs/connect
+[HTTP]: https://nodejs.org/api/http.html
 
-Emitted when any bot command is received. Has [CommandEvent](#commandevent-type) type.
-
-### `commandReceived/<command>` event
-
-Emitted when specific bot command is received. Has [CommandEvent](#commandevent-type) type. Example:
-
-```javascript
-bot.on('commandReceived/start', sendHelloMessage);
-```
-
-### `inlineButtonPressed` event
-
-Emitted on each `callback_query` update. Has [ButtonPressedEvent](#buttonpressedevent-type) type.
-
-### `inlineButtonPressed/<buttonId>` event
-
-Emitted on each `callback_query` update with specified `buttonId`. Has
-[CertainButtonPressedEvent](#certainbuttonpressedevent-type) type. To emit this event
-`callback_query.data` must be `JSON` object winth string or number `buttonId` property:
-
-```json
-{ "buttonId": 1,
-  "anyAnotherProperty": "value" }
-```
-
-## Types
-
-- [`CommandEvent` type][CommandEvent]
-  - `update` — [Update](https://core.telegram.org/bots/API#update)
-  - `command` — Command text. E.g. `/say` for message `/say Hey you!`
-  - `args` — Text after command. E.g. `Hey you!` for message `/say Hey you!`
-- [`ButtonPressedEvent` type][ButtonPressedEvent]
-- [`CertainButtonPressedEvent` type][CertainButtonPressedEvent]
-
-## Native API methods support
-
-- [x] `getUpdates`
-- [x] `setWebhook`
-- [x] `deleteWebhook`
-- [x] `getWebhookInfo`
-- [x] `getMe`
-- [x] `sendMessage`
-- [x] `forwardMessage`
-- [x] `sendPhoto`
-- [x] `sendAudio`
-- [x] `sendDocument`
-- [x] `sendSticker`
-- [x] `sendVideo`
-- [x] `sendVoice`
-- [x] `sendLocation`
-- [x] `sendVenue`
-- [x] `sendContact`
-- [x] `sendChatAction`
-- [x] `getUserProfilePhotos`
-- [x] `getFile`
-- [x] `kickChatMember`
-- [x] `leaveChat`
-- [x] `unbanChatMember`
-- [x] `getChat`
-- [x] `getChatAdministrators`
-- [x] `getChatMembersCount`
-- [x] `getChatMember`
-- [x] `answerCallbackQuery`
-- [ ] `answerInlineQuery`
-- [ ] `sendGame`
-- [ ] `setGameScore`
-- [ ] `getGameHighScores`
-
-[CommandEvent]: src/types/index.js#L15
-[ButtonPressedEvent]: src/types/index.js#L21
-[CertainButtonPressedEvent]: src/types/index.js#L26
+[Subject]: http://reactivex.io/rxjs/class/es6/Subject.js~Subject.html
+[rx]: http://reactivex.io/
+[Flow]: https://flow.org/
+[rxjs]: https://github.com/ReactiveX/rxjs

@@ -147,6 +147,57 @@ following values:
 - `shipping_query`
 - `pre_checkout_query`
 
+```javascript
+const { Observable } = require('rxjs/Observable')
+
+require('rxjs/add/observable/from')
+require('rxjs/add/operator/do')
+require('rxjs/add/operator/map')
+require('rxjs/add/operator/mergeMap')
+require('rxjs/add/operator/filter')
+
+const tg = require('tgapi')
+
+const client = tg.createBotClient('<your bot token>')
+const observer = tg.createUpdateObserver()
+
+// Create subscriber that get updates by long polling using bot client
+// and emit it to observer
+const unsubscribe = tg.createUpdateSubscription(client, observer)
+
+// Our helpers
+const equals = left => right => left === right
+const isHaveText = message => !!message.text
+const isHaveEntities = message => !!message.entities
+const isBotCommand = entity => entity.type === 'bot_command'
+const getEntityValue = text => entity => text.substr(entity.offset, entity.length)
+const getCommands = message => message.entities
+  .filter(isBotCommand)
+  .map(getEntityValue(message.text))
+
+// Using updates observer
+
+// Subscribe to text messages and print it
+observer.message$
+  .pluck('message')
+  .pluck('text')
+  .filter(Boolean)
+  .subscribe(
+    text => console.log('New message: %s!', text),
+  )
+
+// Subscribe to /go_sleep command and turn off long polling after reseived first of
+observer.message$
+  .pluck('message')
+  .filter(isHaveText)
+  .filter(isHaveEntities)
+  .map(getCommands)
+  .mergeMap(Observable.from)
+  .filter(equals('/go_sleep'))
+  .do(() => console.log('Good night my darling'))
+  .subscribe(unsubscribe)
+```
+
 [API]: https://core.telegram.org/bots/API
 [Making requests]: https://core.telegram.org/bots/API#making-requests
 [Available methods]: https://core.telegram.org/bots/API#available-methods

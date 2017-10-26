@@ -206,6 +206,16 @@ export type Chat = {
    * Optional. Pinned message, for supergroups. Returned only in getChat.
    */
   pinned_message?: Message,
+  /**
+   * Optional. For supergroups, name of group sticker set. Returned only in
+   * getChat.
+   */
+  sticker_set_name?: string,
+  /**
+   * Optional. True, if the bot can change the group sticker set. Returned only
+   * in getChat.
+   */
+  can_set_sticker_set?: boolean,
 }
 
 /**
@@ -278,6 +288,11 @@ export type Message = {
    * commands, etc. that appear in the text
    */
   entities?: Array<MessageEntity>,
+  /**
+   * Optional. For messages with a caption, special entities like usernames,
+   * URLs, bot commands, etc. that appear in the caption
+   */
+  caption_entities?: Array<MessageEntity>,
   /**
    * Optional. Message is an audio file, information about the file
    */
@@ -765,7 +780,7 @@ export type ReplyKeyboardMarkup = {
 export type KeyboardButton = {
   /**
    * Text of the button. If none of the optional fields are used, it will be
-   * sent to the bot as a message when the button is pressed
+   * sent as a message when the button is pressed
    */
   text: string,
   /**
@@ -1659,6 +1674,11 @@ export type InlineQueryResultLocation = {
    */
   title: string,
   /**
+   * Optional. Period in seconds for which the location can be updated, should
+   * be between 60 and 86400.
+   */
+  live_period?: number,
+  /**
    * Optional. Inline keyboard attached to the message
    */
   reply_markup?: InlineKeyboardMarkup,
@@ -2162,6 +2182,11 @@ export type InputLocationMessageContent = {
    * Longitude of the location in degrees
    */
   longitude: number,
+  /**
+   * Optional. Period in seconds for which the location can be updated, should
+   * be between 60 and 86400.
+   */
+  live_period?: number,
 }
 
 /**
@@ -3067,13 +3092,18 @@ export interface BotAPIClient {
      */
     chat_id: number | string,
     /**
-     * Latitude of location
+     * Latitude of the location
      */
     latitude: number,
     /**
-     * Longitude of location
+     * Longitude of the location
      */
     longitude: number,
+    /**
+     * Period in seconds for which the location will be updated (see Live
+     * Locations, should be between 60 and 86400.
+     */
+    live_period?: number,
     /**
      * Sends the message silently. Users will receive a notification with no
      * sound.
@@ -3090,6 +3120,77 @@ export interface BotAPIClient {
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply,
   }) => Res<Message>,
+
+  /**
+   * Method editMessageLiveLocation
+   *
+   * Use this method to edit live location messages sent by the bot or via the
+   * bot (for inline bots). A location can be edited until its live_period
+   * expires or editing is explicitly disabled by a call to
+   * stopMessageLiveLocation. On success, if the edited message was sent by the
+   * bot, the edited Message is returned, otherwise True is returned.
+   */
+  editMessageLiveLocation: (params: {
+    /**
+     * Required if inline_message_id is not specified. Unique identifier for the
+     * target chat or username of the target channel (in the format
+     * @channelusername)
+     */
+    chat_id?: number | string,
+    /**
+     * Required if inline_message_id is not specified. Identifier of the sent
+     * message
+     */
+    message_id?: number,
+    /**
+     * Required if chat_id and message_id are not specified. Identifier of the
+     * inline message
+     */
+    inline_message_id?: string,
+    /**
+     * Latitude of new location
+     */
+    latitude: number,
+    /**
+     * Longitude of new location
+     */
+    longitude: number,
+    /**
+     * A JSON-serialized object for a new inline keyboard.
+     */
+    reply_markup?: InlineKeyboardMarkup,
+  }) => Res<any>,
+
+  /**
+   * Method stopMessageLiveLocation
+   *
+   * Use this method to stop updating a live location message sent by the bot or
+   * via the bot (for inline bots) before live_period expires. On success, if
+   * the message was sent by the bot, the sent Message is returned, otherwise
+   * True is returned.
+   */
+  stopMessageLiveLocation: (params?: {
+    /**
+     * Required if inline_message_id is not specified. Unique identifier for the
+     * target chat or username of the target channel (in the format
+     * @channelusername)
+     */
+    chat_id?: number | string,
+    /**
+     * Required if inline_message_id is not specified. Identifier of the sent
+     * message
+     */
+    message_id?: number,
+    /**
+     * Required if chat_id and message_id are not specified. Identifier of the
+     * inline message
+     */
+    inline_message_id?: string,
+    /**
+     * A JSON-serialized object for a new inline keyboard.
+     */
+    reply_markup?: InlineKeyboardMarkup,
+  }) => Res<any>,
 
   /**
    * Method sendVenue
@@ -3623,6 +3724,44 @@ export interface BotAPIClient {
      */
     user_id: number,
   }) => Res<ChatMember>,
+
+  /**
+   * Method setChatStickerSet
+   *
+   * Use this method to set a new group sticker set for a supergroup. The bot
+   * must be an administrator in the chat for this to work and must have the
+   * appropriate admin rights. Use the field can_set_sticker_set optionally
+   * returned in getChat requests to check if the bot can use this method.
+   * Returns True on success.
+   */
+  setChatStickerSet: (params: {
+    /**
+     * Unique identifier for the target chat or username of the target
+     * supergroup (in the format @supergroupusername)
+     */
+    chat_id: number | string,
+    /**
+     * Name of the sticker set to be set as the group sticker set
+     */
+    sticker_set_name: string,
+  }) => Res<any>,
+
+  /**
+   * Method deleteChatStickerSet
+   *
+   * Use this method to delete a group sticker set from a supergroup. The bot
+   * must be an administrator in the chat for this to work and must have the
+   * appropriate admin rights. Use the field can_set_sticker_set optionally
+   * returned in getChat requests to check if the bot can use this method.
+   * Returns True on success.
+   */
+  deleteChatStickerSet: (params: {
+    /**
+     * Unique identifier for the target chat or username of the target
+     * supergroup (in the format @supergroupusername)
+     */
+    chat_id: number | string,
+  }) => Res<any>,
 
   /**
    * Method answerCallbackQuery

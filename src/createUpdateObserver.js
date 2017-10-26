@@ -14,7 +14,6 @@ import type { Update } from './generatedTypes'
 
 import type {
   UpdateObserver,
-  UpdateType,
   MessageUpdate,
   EditedMessageUpdate,
   ChannelPostUpdate,
@@ -38,32 +37,69 @@ interface Streams {
   preCheckoutQuery$: Observable<PreCheckoutQueryUpdate>,
 }
 
-const filterByProp =
-  (update$: Subject<Update>) =>
-    (type: UpdateType): Observable<any> =>
-      update$
-        .filter(update => !!update[type])
-        .distinctUntilKeyChanged('update_id')
-        .map(({ update_id, ...update }) => ({
-          update_id, type, [type]: update[type],
-        }))
-
 export default (): UpdateObserver => {
   const update$: Subject<Update> = new Subject()
 
-  const filterBy = filterByProp(update$)
+  /* eslint-disable camelcase */
 
   const streams: Streams = {
-    message$: filterBy('message'),
-    editedMessage$: filterBy('edited_message'),
-    channelPost$: filterBy('channel_post'),
-    editedChannelPost$: filterBy('edited_channel_post'),
-    inlineQuery$: filterBy('inline_query'),
-    chosenInlineResult$: filterBy('chosen_inline_result'),
-    callbackQuery$: filterBy('callback_query'),
-    shippingQuery$: filterBy('shipping_query'),
-    preCheckoutQuery$: filterBy('pre_checkout_query'),
+
+    message$: update$.mergeMap(
+      ({ update_id, message }) => message ?
+        Observable.of({ update_id, message, type: 'message' }) :
+        Observable.empty(),
+    ),
+
+    editedMessage$: update$.mergeMap(
+      ({ update_id, edited_message }) => edited_message ?
+        Observable.of({ update_id, edited_message, type: 'edited_message' }) :
+        Observable.empty(),
+    ),
+
+    channelPost$: update$.mergeMap(
+      ({ update_id, channel_post }) => channel_post ?
+        Observable.of({ update_id, channel_post, type: 'channel_post' }) :
+        Observable.empty(),
+    ),
+
+    editedChannelPost$: update$.mergeMap(
+      ({ update_id, edited_channel_post }) => edited_channel_post ?
+        Observable.of({ update_id, edited_channel_post, type: 'edited_channel_post' }) :
+        Observable.empty(),
+    ),
+
+    inlineQuery$: update$.mergeMap(
+      ({ update_id, inline_query }) => inline_query ?
+        Observable.of({ update_id, inline_query, type: 'inline_query' }) :
+        Observable.empty(),
+    ),
+
+    chosenInlineResult$: update$.mergeMap(
+      ({ update_id, chosen_inline_result }) => chosen_inline_result ?
+        Observable.of({ update_id, chosen_inline_result, type: 'chosen_inline_result' }) :
+        Observable.empty(),
+    ),
+
+    callbackQuery$: update$.mergeMap(
+      ({ update_id, callback_query }) => callback_query ?
+        Observable.of({ update_id, callback_query, type: 'callback_query' }) :
+        Observable.empty(),
+    ),
+
+    shippingQuery$: update$.mergeMap(
+      ({ update_id, shipping_query }) => shipping_query ?
+        Observable.of({ update_id, shipping_query, type: 'shipping_query' }) :
+        Observable.empty(),
+    ),
+
+    preCheckoutQuery$: update$.mergeMap(
+      ({ update_id, pre_checkout_query }) => pre_checkout_query ?
+        Observable.of({ update_id, pre_checkout_query, type: 'pre_checkout_query' }) :
+        Observable.empty(),
+    ),
   }
+
+  /* eslint-enable camelcase */
 
   return {
     next: (update: Update) => update$.next(update),

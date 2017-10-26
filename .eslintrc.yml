@@ -19,6 +19,8 @@ rules:
     - error
     - except-parens
 
+  no-confusing-arrow: off
+
   semi:
     - error
     - never

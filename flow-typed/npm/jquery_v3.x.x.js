@@ -1,5 +1,5 @@
-// flow-typed signature: 066808d234ac8be670d3464bfc58baef
-// flow-typed version: b43dff3e0e/jquery_v3.x.x/flow_>=v0.28.x
+// flow-typed signature: 477ad33664790946008a58ce64f6143a
+// flow-typed version: 59f8f71a60/jquery_v3.x.x/flow_>=v0.28.x
 
 /* eslint-disable max-len, no-unused-vars, flowtype/no-weak-types */
 
@@ -222,6 +222,17 @@ declare class JQueryXHR {
    * Property containing the parsed response if the response Content-Type is json
    */
   responseJSON?: any;
+
+  /**
+   * Property containing the parsed response if the response Content-Type is text/plain
+   */
+  responseText?: string;
+
+  /**
+   * Status code of the response
+   */
+  status?: number;
+
   /**
    * A function to be called if the request fails.
    */

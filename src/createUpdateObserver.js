@@ -1,6 +1,5 @@
 /* @flow */
 
-import { values } from 'ramda'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 
@@ -113,7 +112,17 @@ export default (): UpdateObserver => {
 
     update$: (
       Observable
-        .merge(...values(streams))
+        .merge(
+          streams.message$,
+          streams.editedMessage$,
+          streams.channelPost$,
+          streams.editedChannelPost$,
+          streams.inlineQuery$,
+          streams.chosenInlineResult$,
+          streams.callbackQuery$,
+          streams.shippingQuery$,
+          streams.preCheckoutQuery$,
+        )
         .distinctUntilChanged((prev, next) => (
           prev.update_id === next.update_id &&
           prev.type === next.type

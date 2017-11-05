@@ -33,7 +33,7 @@
     "transpile": "shx rm -f lib/bundle.js && rollup -c",
     "precommit": "yarn lint && yarn flow && yarn test",
     "preversion": "git checkout master && yarn precommit",
-    "postversion": "yarn transpile && npm publish && git push origin master --tags"
+    "postversion": "git push origin master --follow-tags"
   },
   "dependencies": {
     "body-parser": "1.18.2",

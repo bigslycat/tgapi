@@ -1,4 +1,4 @@
-# tgapi
+# tgapi [![Build Status][status-img]][status-url]
 
 Actual Telegram bot API with Rx-driven updates and full Flow type coverage
 
@@ -214,3 +214,6 @@ observer.message$
 [rx]: http://reactivex.io/
 [Flow]: https://flow.org/
 [rxjs]: https://github.com/ReactiveX/rxjs
+
+[status-url]: https://travis-ci.org/bigslycat/tgapi
+[status-img]: https://travis-ci.org/bigslycat/tgapi.svg?branch=master

@@ -35,12 +35,12 @@ acorn@^4.0.4:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.13.tgz#105495ae5361d697bd195c825192e1ad7f253787"
 
 acorn@^5.1.1, acorn@^5.1.2:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.1.2.tgz#911cb53e036807cf0fa778dc5d370fbd864246d7"
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.2.1.tgz#317ac7821826c22c702d66189ab8359675f135d7"
 
 ajv-keywords@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-2.1.0.tgz#a296e17f7bfae7c1ce4f7e0de53d29cb32162df0"
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-2.1.1.tgz#617997fc5f60576894c435f940d819e135b80762"
 
 ajv@^4.9.1:
   version "4.11.8"
@@ -1574,9 +1574,9 @@ eslint-scope@^3.7.1:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint@^4.9.0:
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.9.0.tgz#76879d274068261b191fe0f2f56c74c2f4208e8b"
+eslint@^4.10.0:
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.10.0.tgz#f25d0d7955c81968c2309aa5c9a229e045176bb7"
   dependencies:
     ajv "^5.2.0"
     babel-code-frame "^6.22.0"
@@ -1816,13 +1816,13 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flow-bin@^0.57.3:
-  version "0.57.3"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.57.3.tgz#843fb80a821b6d0c5847f7bb3f42365ffe53b27b"
+flow-bin@^0.58.0:
+  version "0.58.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.58.0.tgz#62d5a776589419e5656800a0e5230a5e585ca65e"
 
-flow-typed@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/flow-typed/-/flow-typed-2.2.1.tgz#3de06241ebb0aa154ff681748ba74d19c7d9042f"
+flow-typed@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/flow-typed/-/flow-typed-2.2.3.tgz#e7a35915a0f4cfcf8068c1ce291b5c99e6b89efa"
   dependencies:
     babel-polyfill "^6.23.0"
     colors "^1.1.2"
@@ -2281,11 +2281,7 @@ is-binary-path@^1.0.0:
   dependencies:
     binary-extensions "^1.0.0"
 
-is-buffer@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.5.tgz#1f3b26ef613b214b88cbca23cc6c01d87961eecc"
-
-is-buffer@~1.1.1:
+is-buffer@^1.1.5, is-buffer@~1.1.1:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
 
@@ -2748,8 +2744,8 @@ jsbn@~0.1.0:
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
 
 jschardet@^1.4.2:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/jschardet/-/jschardet-1.5.1.tgz#c519f629f86b3a5bedba58a88d311309eec097f9"
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/jschardet/-/jschardet-1.6.0.tgz#c7d1a71edcff2839db2f9ec30fc5d5ebd3c1a678"
 
 jsdom@^9.12.0:
   version "9.12.0"
@@ -3768,13 +3764,13 @@ resolve@1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
-resolve@^1.1.6, resolve@^1.4.0:
+resolve@^1.1.6:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.4.0.tgz#a75be01c53da25d934a98ebd0e4c4a7312f92a86"
   dependencies:
     path-parse "^1.0.5"
 
-resolve@^1.2.0:
+resolve@^1.2.0, resolve@^1.4.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.5.0.tgz#1f09acce796c9a762579f31b2c1cc4c3cddf9f36"
   dependencies:
@@ -3805,7 +3801,7 @@ rollup-plugin-babel@3.0.2:
   dependencies:
     rollup-pluginutils "^1.5.0"
 
-"rollup-plugin-commonjs@<=8.2.3 || ^8.2.6":
+"rollup-plugin-commonjs@<=8.2.3 || ^8.2.7":
   version "8.2.3"
   resolved "https://registry.yarnpkg.com/rollup-plugin-commonjs/-/rollup-plugin-commonjs-8.2.3.tgz#63e86effcc4d9ead629c68b510db44594e63ee00"
   dependencies:
@@ -4378,8 +4374,8 @@ verror@1.10.0:
     extsprintf "^1.2.0"
 
 vlq@^0.2.1:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/vlq/-/vlq-0.2.2.tgz#e316d5257b40b86bb43cb8d5fea5d7f54d6b0ca1"
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/vlq/-/vlq-0.2.3.tgz#8f3e4328cf63b1540c0d67e1b2778386f8975b26"
 
 walker@~1.0.5:
   version "1.0.7"

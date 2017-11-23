@@ -7,13 +7,12 @@ import isMethod from './isMethod'
 
 import type { SpecRawType, Spec } from '../../types'
 
-export default (
-  { name,
-    description: descRaw,
-    fieldHeaders,
-    fieldsData,
-  }: SpecRawType,
-): Spec => {
+export default ({
+  name,
+  description: descRaw,
+  fieldHeaders,
+  fieldsData,
+}: SpecRawType): Spec => {
   const fields: any = zipToHeaders(fieldHeaders)(fieldsData)
   const description = cutBr(descRaw)
 

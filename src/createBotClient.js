@@ -59,6 +59,7 @@ export default (token: string): Client => {
     sendVideo: createMethod('sendVideo'),
     sendVoice: createMethod('sendVoice'),
     sendVideoNote: createMethod('sendVideoNote'),
+    sendMediaGroup: createMethod('sendMediaGroup'),
     sendLocation: createMethod('sendLocation'),
     editMessageLiveLocation: createMethod('editMessageLiveLocation'),
     stopMessageLiveLocation: createMethod('stopMessageLiveLocation'),

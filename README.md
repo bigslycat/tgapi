@@ -148,13 +148,7 @@ following values:
 - `pre_checkout_query`
 
 ```javascript
-const { Observable } = require('rxjs/Observable')
-
-require('rxjs/add/observable/from')
-require('rxjs/add/operator/do')
-require('rxjs/add/operator/map')
-require('rxjs/add/operator/mergeMap')
-require('rxjs/add/operator/filter')
+const { Observable } = require('rxjs')
 
 const tg = require('tgapi')
 

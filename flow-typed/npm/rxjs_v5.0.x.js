@@ -1,5 +1,5 @@
-// flow-typed signature: 999818c792bf494aaad92f5a8f42ff0c
-// flow-typed version: 575a5426a9/rxjs_v5.0.x/flow_>=v0.34.x
+// flow-typed signature: 745b227a0b5788ad7462065b7a14804f
+// flow-typed version: f6f8972cd6/rxjs_v5.0.x/flow_>=v0.34.x
 
 // FIXME(samgoldman) Remove top-level interface once Babel supports
 // `declare interface` syntax.
@@ -862,6 +862,185 @@ declare class rxjs$Observable<+T> {
   ): rxjs$Observable<G>;
 
   combineLatest<A, B, C, D, E, F, G, H>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    e: rxjs$Observable<E>,
+    f: rxjs$Observable<F>,
+    g: rxjs$Observable<G>,
+    resultSelector: (a: A, b: B, c: C, d: D, e: E, f: F, g: G) => H
+  ): rxjs$Observable<H>;
+
+  static zip<A, B>(
+    a: rxjs$Observable<A>,
+    resultSelector: (a: A) => B
+  ): rxjs$Observable<B>;
+
+  static zip<A, B, C>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    resultSelector: (a: A, b: B) => C
+  ): rxjs$Observable<C>;
+
+  static zip<A, B, C, D>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    resultSelector: (a: A, b: B, c: C) => D
+  ): rxjs$Observable<D>;
+
+  static zip<A, B, C, D, E>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    resultSelector: (a: A, b: B, c: C, d: D) => E
+  ): rxjs$Observable<E>;
+
+  static zip<A, B, C, D, E, F>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    e: rxjs$Observable<E>,
+    resultSelector: (a: A, b: B, c: C, d: D, e: E) => F
+  ): rxjs$Observable<F>;
+
+  static zip<A, B, C, D, E, F, G>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    e: rxjs$Observable<E>,
+    f: rxjs$Observable<F>,
+    resultSelector: (a: A, b: B, c: C, d: D, e: E, f: F) => G
+  ): rxjs$Observable<G>;
+
+  static zip<A, B, C, D, E, F, G, H>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    e: rxjs$Observable<E>,
+    f: rxjs$Observable<F>,
+    g: rxjs$Observable<G>,
+    resultSelector: (a: A, b: B, c: C, d: D, e: E, f: F, g: G) => H
+  ): rxjs$Observable<H>;
+
+  static zip<A>(a: rxjs$Observable<A>, _: void): rxjs$Observable<[A]>;
+
+  static zip<A, B>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    _: void
+  ): rxjs$Observable<[A, B]>;
+
+  static zip<A, B, C>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    _: void
+  ): rxjs$Observable<[A, B, C]>;
+
+  static zip<A, B, C, D>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    _: void
+  ): rxjs$Observable<[A, B, C, D]>;
+
+  static zip<A, B, C, D, E>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    e: rxjs$Observable<E>,
+    _: void
+  ): rxjs$Observable<[A, B, C, D, E]>;
+
+  static zip<A, B, C, D, E, F>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    e: rxjs$Observable<E>,
+    f: rxjs$Observable<F>,
+    _: void
+  ): rxjs$Observable<[A, B, C, D, E, F]>;
+
+  static zip<A, B, C, D, E, F, G>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    e: rxjs$Observable<E>,
+    f: rxjs$Observable<F>,
+    g: rxjs$Observable<G>,
+    _: void
+  ): rxjs$Observable<[A, B, C, D, E, F, G]>;
+
+  static zip<A, B, C, D, E, F, G, H>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    e: rxjs$Observable<E>,
+    f: rxjs$Observable<F>,
+    g: rxjs$Observable<G>,
+    h: rxjs$Observable<H>,
+    _: void
+  ): rxjs$Observable<[A, B, C, D, E, F, G, H]>;
+
+  zip<A>(a: rxjs$Observable<A>, _: void): rxjs$Observable<[T, A]>;
+
+  zip<A, B>(
+    a: rxjs$Observable<A>,
+    resultSelector: (a: A) => B
+  ): rxjs$Observable<B>;
+
+  zip<A, B, C>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    resultSelector: (a: A, b: B) => C
+  ): rxjs$Observable<C>;
+
+  zip<A, B, C, D>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    resultSelector: (a: A, b: B, c: C) => D
+  ): rxjs$Observable<D>;
+
+  zip<A, B, C, D, E>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    resultSelector: (a: A, b: B, c: C, d: D) => E
+  ): rxjs$Observable<E>;
+
+  zip<A, B, C, D, E, F>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    e: rxjs$Observable<E>,
+    resultSelector: (a: A, b: B, c: C, d: D, e: E) => F
+  ): rxjs$Observable<F>;
+
+  zip<A, B, C, D, E, F, G>(
+    a: rxjs$Observable<A>,
+    b: rxjs$Observable<B>,
+    c: rxjs$Observable<C>,
+    d: rxjs$Observable<D>,
+    e: rxjs$Observable<E>,
+    f: rxjs$Observable<F>,
+    resultSelector: (a: A, b: B, c: C, d: D, e: E, f: F) => G
+  ): rxjs$Observable<G>;
+
+  zip<A, B, C, D, E, F, G, H>(
     a: rxjs$Observable<A>,
     b: rxjs$Observable<B>,
     c: rxjs$Observable<C>,

@@ -275,6 +275,11 @@ export type Message = {
    */
   edit_date?: number,
   /**
+   * Optional. The unique identifier of a media message group this message
+   * belongs to
+   */
+  media_group_id?: string,
+  /**
    * Optional. Signature of the post author for messages in channels
    */
   author_signature?: string,
@@ -1015,7 +1020,7 @@ export type ChatMember = {
   can_post_messages?: boolean,
   /**
    * Optional. Administrators only. True, if the administrator can edit messages
-   * of other users, channels only
+   * of other users and can pin messages, channels only
    */
   can_edit_messages?: boolean,
   /**
@@ -1086,6 +1091,66 @@ export type ResponseParameters = {
    * wait before the request can be repeated
    */
   retry_after?: number,
+}
+
+/**
+ * InputMediaPhoto
+ *
+ * Represents a photo to be sent.
+ */
+export type InputMediaPhoto = {
+  /**
+   * Type of the result, must be photo
+   */
+  type: string,
+  /**
+   * File to send. Pass a file_id to send a file that exists on the Telegram
+   * servers (recommended), pass an HTTP URL for Telegram to get a file from the
+   * Internet, or pass "attach://<file_attach_name>" to upload a new one using
+   * multipart/form-data under <file_attach_name> name. More info on Sending
+   * Files »
+   */
+  media: string,
+  /**
+   * Optional. Caption of the photo to be sent, 0-200 characters
+   */
+  caption?: string,
+}
+
+/**
+ * InputMediaVideo
+ *
+ * Represents a video to be sent.
+ */
+export type InputMediaVideo = {
+  /**
+   * Type of the result, must be video
+   */
+  type: string,
+  /**
+   * File to send. Pass a file_id to send a file that exists on the Telegram
+   * servers (recommended), pass an HTTP URL for Telegram to get a file from the
+   * Internet, or pass "attach://<file_attach_name>" to upload a new one using
+   * multipart/form-data under <file_attach_name> name. More info on Sending
+   * Files »
+   */
+  media: string,
+  /**
+   * Optional. Caption of the video to be sent, 0-200 characters
+   */
+  caption?: string,
+  /**
+   * Optional. Video width
+   */
+  width?: number,
+  /**
+   * Optional. Video height
+   */
+  height?: number,
+  /**
+   * Optional. Video duration
+   */
+  duration?: number,
 }
 
 /**
@@ -2587,6 +2652,17 @@ export type GameHighScore = {
 }
 
 /**
+ * InputMedia
+ *
+ * This object represents the content of a media message to be sent. It should
+ * be one of
+ */
+export type InputMedia = (
+  InputMediaPhoto |
+  InputMediaVideo
+)
+
+/**
  * InlineQueryResult
  *
  * This object represents one result of an inline query. Telegram clients
@@ -3080,6 +3156,34 @@ export interface BotAPIClient {
   }) => Res<Message>,
 
   /**
+   * Method sendMediaGroup
+   *
+   * Use this method to send a group of photos or videos as an album. On
+   * success, an array of the sent Messages is returned.
+   */
+  sendMediaGroup: (params: {
+    /**
+     * Unique identifier for the target chat or username of the target channel
+     * (in the format @channelusername)
+     */
+    chat_id: number | string,
+    /**
+     * A JSON-serialized array describing photos and videos to be sent, must
+     * include 2–10 items
+     */
+    media: Array<InputMedia>,
+    /**
+     * Sends the messages silently. Users will receive a notification with no
+     * sound.
+     */
+    disable_notification?: boolean,
+    /**
+     * If the messages are a reply, ID of the original message
+     */
+    reply_to_message_id?: number,
+  }) => Res<any>,
+
+  /**
    * Method sendLocation
    *
    * Use this method to send point on the map. On success, the sent Message is
@@ -3481,8 +3585,8 @@ export interface BotAPIClient {
      */
     can_post_messages?: boolean,
     /**
-     * Pass True, if the administrator can edit messages of other users,
-     * channels only
+     * Pass True, if the administrator can edit messages of other users and can
+     * pin messages, channels only
      */
     can_edit_messages?: boolean,
     /**
@@ -3611,14 +3715,15 @@ export interface BotAPIClient {
   /**
    * Method pinChatMessage
    *
-   * Use this method to pin a message in a supergroup. The bot must be an
-   * administrator in the chat for this to work and must have the appropriate
-   * admin rights. Returns True on success.
+   * Use this method to pin a message in a supergroup or a channel. The bot must
+   * be an administrator in the chat for this to work and must have the
+   * ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’
+   * admin right in the channel. Returns True on success.
    */
   pinChatMessage: (params: {
     /**
-     * Unique identifier for the target chat or username of the target
-     * supergroup (in the format @supergroupusername)
+     * Unique identifier for the target chat or username of the target channel
+     * (in the format @channelusername)
      */
     chat_id: number | string,
     /**
@@ -3626,8 +3731,9 @@ export interface BotAPIClient {
      */
     message_id: number,
     /**
-     * Pass True, if it is not necessary to send a notification to all group
-     * members about the new pinned message
+     * Pass True, if it is not necessary to send a notification to all chat
+     * members about the new pinned message. Notifications are always disabled
+     * in channels.
      */
     disable_notification?: boolean,
   }) => Res<true>,
@@ -3635,14 +3741,15 @@ export interface BotAPIClient {
   /**
    * Method unpinChatMessage
    *
-   * Use this method to unpin a message in a supergroup chat. The bot must be an
-   * administrator in the chat for this to work and must have the appropriate
-   * admin rights. Returns True on success.
+   * Use this method to unpin a message in a supergroup or a channel. The bot
+   * must be an administrator in the chat for this to work and must have the
+   * ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’
+   * admin right in the channel. Returns True on success.
    */
   unpinChatMessage: (params: {
     /**
-     * Unique identifier for the target chat or username of the target
-     * supergroup (in the format @supergroupusername)
+     * Unique identifier for the target chat or username of the target channel
+     * (in the format @channelusername)
      */
     chat_id: number | string,
   }) => Res<true>,
@@ -4214,6 +4321,12 @@ export interface BotAPIClient {
      * delivery cost, delivery tax, bonus, etc.)
      */
     prices: Array<LabeledPrice>,
+    /**
+     * JSON-encoded data about the invoice, which will be shared with the
+     * payment provider. A detailed description of required fields should be
+     * provided by the payment provider.
+     */
+    provider_data?: string,
     /**
      * URL of the product photo for the invoice. Can be a photo of the goods or
      * a marketing image for a service. People like it better when they see what

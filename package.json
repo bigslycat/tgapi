@@ -30,7 +30,7 @@
     "posttyped": "flow-typed install jquery@3.2.1",
     "script": "babel-node --",
     "tg-types": "yarn script src/scripts/generateTgTypes",
-    "transpile": "shx rm -f lib/bundle.js && rollup -c",
+    "transpile": "rollup -c",
     "precommit": "yarn lint && yarn flow && yarn test",
     "preversion": "git checkout master && yarn precommit",
     "postversion": "git push --follow-tags"

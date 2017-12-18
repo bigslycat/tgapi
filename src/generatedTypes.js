@@ -3183,7 +3183,7 @@ export interface BotAPIClient {
      * If the messages are a reply, ID of the original message
      */
     reply_to_message_id?: number,
-  }) => Res<any>,
+  }) => Res<Message[]>,
 
   /**
    * Method sendLocation
@@ -3265,7 +3265,7 @@ export interface BotAPIClient {
      * A JSON-serialized object for a new inline keyboard.
      */
     reply_markup?: InlineKeyboardMarkup,
-  }) => Res<any>,
+  }) => Res<Message | true>,
 
   /**
    * Method stopMessageLiveLocation
@@ -3296,7 +3296,7 @@ export interface BotAPIClient {
      * A JSON-serialized object for a new inline keyboard.
      */
     reply_markup?: InlineKeyboardMarkup,
-  }) => Res<any>,
+  }) => Res<Message | true>,
 
   /**
    * Method sendVenue
@@ -3853,7 +3853,7 @@ export interface BotAPIClient {
      * Name of the sticker set to be set as the group sticker set
      */
     sticker_set_name: string,
-  }) => Res<any>,
+  }) => Res<true>,
 
   /**
    * Method deleteChatStickerSet
@@ -3870,7 +3870,7 @@ export interface BotAPIClient {
      * supergroup (in the format @supergroupusername)
      */
     chat_id: number | string,
-  }) => Res<any>,
+  }) => Res<true>,
 
   /**
    * Method answerCallbackQuery

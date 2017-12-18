@@ -31,7 +31,10 @@ const returns = {
   sendVideo: 'Message',
   sendVoice: 'Message',
   sendVideoNote: 'Message',
+  sendMediaGroup: 'Message[]',
   sendLocation: 'Message',
+  editMessageLiveLocation: 'Message | true',
+  stopMessageLiveLocation: 'Message | true',
   sendVenue: 'Message',
   sendContact: 'Message',
 
@@ -57,6 +60,8 @@ const returns = {
   getChatAdministrators: 'ChatMember[]',
   getChatMembersCount: 'number',
   getChatMember: 'ChatMember',
+  setChatStickerSet: 'true',
+  deleteChatStickerSet: 'true',
   answerCallbackQuery: 'true',
 
   editMessageText: 'Message | true',

@@ -15,6 +15,7 @@
     "src/createMiddleware.js",
     "src/createUpdateObserver.js",
     "src/createUpdateSubscription.js",
+    "src/createWebhookServer.js",
     "src/generatedTypes.js",
     "src/HTTPError.js",
     "src/index.js",

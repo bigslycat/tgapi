@@ -1,5 +1,5 @@
-// flow-typed signature: a336604fc39e7934f8153f0496da10eb
-// flow-typed version: 656f69c1c8/ramda_v0.x.x/flow_>=v0.49.x
+// flow-typed signature: faac0f4abd84249ad0a0cb24383e72d3
+// flow-typed version: 03a0733eae/ramda_v0.x.x/flow_>=v0.62.x
 
 /* eslint-disable no-unused-vars, no-redeclare */
 
@@ -497,12 +497,13 @@ declare module ramda {
   declare var match: CurriedFunction2<RegExp, string, Array<string | void>>;
   declare var replace: CurriedFunction3<
     RegExp | string,
-    string,
+    string | ((substring: string, ...args: Array<string>) => string),
     string,
     string
   >;
   declare var split: CurriedFunction2<RegExp | string, string, Array<string>>;
   declare var test: CurriedFunction2<RegExp, string, boolean>;
+  declare var startsWith: CurriedFunction2<string | Array<string>, string, boolean>;
   declare function toLower(a: string): string;
   declare function toString(a: any): string;
   declare function toUpper(a: string): string;
@@ -643,9 +644,9 @@ declare module ramda {
     input: A
   ): R;
 
-  declare function indexOf<E>(x: E, xs: Array<E>): number;
+  declare function indexOf<E>(x: ?E, xs: Array<E>): number;
   declare function indexOf<E>(
-    x: E,
+    x: ?E,
     ...rest: Array<void>
   ): (xs: Array<E>) => number;
 
@@ -875,6 +876,12 @@ declare module ramda {
     ...rest: Array<void>
   ): (xs: T) => T;
 
+  declare function sortWith<V, T: Array<V>>(fns: Array<(a: V, b: V) => number>, xs: T): T;
+  declare function sortWith<V, T: Array<V>>(
+    fns: Array<(a: V, b: V) => number>,
+    ...rest: Array<void>
+  ): (xs: T) => T;
+
   declare function times<T>(fn: (i: number) => T, n: number): Array<T>;
   declare function times<T>(
     fn: (i: number) => T,
@@ -979,21 +986,21 @@ declare module ramda {
 
   declare function reverse<T, V: Array<T> | string>(xs: V): V;
 
-  declare function reduce<A, B>(
-    fn: (acc: A, elem: B) => A,
-    ...rest: Array<void>
-  ): ((init: A, xs: Array<B>) => A) &
-    ((init: A, ...rest: Array<void>) => (xs: Array<B>) => A);
-  declare function reduce<A, B>(
-    fn: (acc: A, elem: B) => A,
-    init: A,
-    ...rest: Array<void>
-  ): (xs: Array<B>) => A;
-  declare function reduce<A, B>(
-    fn: (acc: A, elem: B) => A,
-    init: A,
-    xs: Array<B>
-  ): A;
+  declare type Reduce = (<A, B>(
+    fn: (acc: A, elm: B) => A
+  ) => ((init: A) => (xs: Array<B> | $ReadOnlyArray<B>) => A) &
+    ((init: A, xs: Array<B> | $ReadOnlyArray<B>) => A)) &
+    (<A, B>(
+      fn: (acc: A, elm: B) => A,
+      init: A
+    ) => (xs: Array<B> | $ReadOnlyArray<B>) => A) &
+    (<A, B>(
+      fn: (acc: A, elm: B) => A,
+      init: A,
+      xs: Array<B> | $ReadOnlyArray<B>
+    ) => A);
+
+  declare var reduce: Reduce;
 
   declare function reduceBy<A, B>(
     fn: (acc: B, elem: A) => B,

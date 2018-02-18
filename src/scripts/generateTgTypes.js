@@ -4,7 +4,7 @@ import { writeFileSync } from 'fs'
 import { resolve } from 'path'
 
 // $FlowFixMe
-import { map, startsWith, always, ifElse, flatten } from 'ramda'
+import { map, startsWith, flatten } from 'ramda'
 
 import getRawData from '../electron-runtime/getRawData'
 
@@ -97,11 +97,9 @@ const max = 80
 const pad = leftPad(2)
 const pad2 = leftPad(4)
 
-const getGlue = ifElse(
-  startsWith('Optional.'),
-  always('?: '),
-  always(': '),
-)
+const isOptional = startsWith('Optional.')
+
+const getGlue = (str: string) => isOptional(str) ? '?: ' : ': '
 
 const isAllOptional =
   (fields: Array<{

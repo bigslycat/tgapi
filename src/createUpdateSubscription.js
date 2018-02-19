@@ -72,16 +72,10 @@ export default (
       if (!res.ok) return 1
       const lastUpdate = last(res.result)
       return lastUpdate ? lastUpdate.update_id + 1 : 1
-    }).subscribe(
-      offset => subject$.next(offset),
-    )
+    }).subscribe(subject$)
 
   const updatesSubscription =
-    updates$.subscribe(
-      update => observer$.next(update),
-      err => observer$.error && observer$.error(err),
-      () => observer$.complete && observer$.complete(),
-    )
+    updates$.subscribe(observer$)
 
   return () => {
     offsetSubscription.unsubscribe()

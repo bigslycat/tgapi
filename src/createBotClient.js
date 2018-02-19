@@ -1,6 +1,7 @@
 /* @flow */
 
-import rp from 'request-promise'
+import fetch from 'node-fetch'
+import FormData from 'form-data'
 
 import type {
   Res,
@@ -13,12 +14,24 @@ export interface Client extends BotAPIClient {
 
 type RequestBody = { [prop: string]: any }
 
+const getMultipart = (body: RequestBody) => {
+  const multipart = new FormData()
+
+  Object.entries(body).forEach(
+    ([key, value]) => multipart.append(key, value),
+  )
+
+  return multipart
+}
+
 const sendRequest =
-  (url: string, body?: RequestBody): Res<any> => rp({
-    uri: url,
-    json: true,
-    formData: body,
-  })
+  async (url: string, body?: RequestBody): Res<any> => {
+    const options = body ?
+      { method: 'POST', body: getMultipart(body) } :
+      { method: 'POST' }
+
+    return (await fetch(url, options)).json()
+  }
 
 const getMethodURL =
   (token: string) => (methodName: string): string =>

@@ -25,8 +25,6 @@ export default {
     format: 'cjs',
   },
   plugins: [
-    resolve(),
-    commonjs(),
     babel({
       babelrc: false,
       exclude: 'node_modules/**',
@@ -42,6 +40,8 @@ export default {
         }],
       ],
     }),
+    resolve(),
+    commonjs(),
   ],
   external: id => reg.test(id),
   banner,

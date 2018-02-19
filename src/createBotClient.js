@@ -1,6 +1,6 @@
 /* @flow */
 
-import rest from 'restler'
+import needle from 'needle'
 import { mapObjIndexed } from 'ramda'
 
 import type {
@@ -22,30 +22,14 @@ const prepareBody = mapObjIndexed(
 )
 
 const sendRequest =
-  (url: string, body?: RequestBody): Res<any> =>
-    new Promise(
-      (res, rej) =>
-        rest.post(
-          url, body && {
-            multipart: true,
-            data: prepareBody(body),
-          },
-        )
-          .on('success', res)
-          .on('fail', rej),
-    )
-
-const getMethodURL =
-  (token: string) => (methodName: string): string =>
-    `https://api.telegram.org/bot${token}/${methodName}`
+  (token: string) => (methodName: string) =>
+    (params?: RequestBody): Res<any> => needle(
+      'post', `https://api.telegram.org/bot${token}/${methodName}`,
+      params && prepareBody(params), { multipart: true },
+    ).then(res => res.body)
 
 export default (token: string): Client => {
-  const getUrl = getMethodURL(token)
-
-  const createMethod = (methodName: string) => {
-    const url = getUrl(methodName)
-    return (params?: RequestBody): Res<any> => sendRequest(url, params)
-  }
+  const createMethod = sendRequest(token)
 
   return {
     get token(): string { return token },

@@ -1067,7 +1067,7 @@ debug@2.2.0:
   dependencies:
     ms "0.7.1"
 
-debug@2.6.9, debug@^2.1.3, debug@^2.2.0, debug@^2.6.8:
+debug@2.6.9, debug@^2.1.2, debug@^2.1.3, debug@^2.2.0, debug@^2.6.8:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
@@ -1832,11 +1832,7 @@ husky@^0.14.3:
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
 
-iconv-lite@0.2.11:
-  version "0.2.11"
-  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.2.11.tgz#1ce60a3a57864a292d1321ff4609ca4bb965adc8"
-
-iconv-lite@0.4.19, iconv-lite@^0.4.17:
+iconv-lite@0.4.19, iconv-lite@^0.4.17, iconv-lite@^0.4.4:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
 
@@ -2390,6 +2386,13 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
+needle@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/needle/-/needle-2.1.2.tgz#33e86eb56ecf1761299948ee8bd1f403cdfc2137"
+  dependencies:
+    debug "^2.1.2"
+    iconv-lite "^0.4.4"
+
 nightmare@^2.10.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/nightmare/-/nightmare-2.10.0.tgz#e9c5d590bb296f59685fd48218c2fbac44767b21"
@@ -2725,10 +2728,6 @@ punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
-qs@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-1.2.0.tgz#ed079be28682147e6fd9a34cc2b0c1e0ec6453ee"
-
 qs@6.5.1, qs@~6.5.1:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
@@ -2999,15 +2998,6 @@ resolve@^1.2.0, resolve@^1.4.0:
   dependencies:
     path-parse "^1.0.5"
 
-restler@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/restler/-/restler-3.4.0.tgz#741ec0b3d16b949feea2813d0c3c68529e888d9b"
-  dependencies:
-    iconv-lite "0.2.11"
-    qs "1.2.0"
-    xml2js "0.4.0"
-    yaml "0.2.3"
-
 restore-cursor@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/restore-cursor/-/restore-cursor-2.0.0.tgz#9f7ee287f82fd326d4fd162923d62129eee0dfaf"
@@ -3088,10 +3078,6 @@ rxjs@^5.5.6:
 safe-buffer@^5.0.1, safe-buffer@^5.1.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
-
-sax@0.5.x:
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/sax/-/sax-0.5.8.tgz#d472db228eb331c2506b0e8c15524adb939d12c1"
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0:
   version "5.4.1"
@@ -3567,17 +3553,6 @@ write@^0.2.1:
   dependencies:
     mkdirp "^0.5.1"
 
-xml2js@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.0.tgz#124fc4114b4129c810800ecb2ac86cf25462cb9a"
-  dependencies:
-    sax "0.5.x"
-    xmlbuilder ">=0.4.2"
-
-xmlbuilder@>=0.4.2:
-  version "9.0.7"
-  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
-
 xtend@~2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-2.1.2.tgz#6efecc2a4dad8e6962c4901b337ce7ba87b5d28b"
@@ -3595,10 +3570,6 @@ y18n@^3.2.1:
 yallist@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
-
-yaml@0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/yaml/-/yaml-0.2.3.tgz#b5450e92e76ef36b5dd24e3660091ebaeef3e5c7"
 
 yargs-parser@^2.4.1:
   version "2.4.1"

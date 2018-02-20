@@ -205,7 +205,8 @@ export type Chat = {
    */
   invite_link?: string,
   /**
-   * Optional. Pinned message, for supergroups. Returned only in getChat.
+   * Optional. Pinned message, for supergroups and channel chats. Returned only
+   * in getChat.
    */
   pinned_message?: Message,
   /**
@@ -422,6 +423,11 @@ export type Message = {
    * information about the payment. More about payments »
    */
   successful_payment?: SuccessfulPayment,
+  /**
+   * Optional. The domain name of the website on which the user has logged in.
+   * More about Telegram Login »
+   */
+  connected_website?: string,
 }
 
 /**
@@ -1117,6 +1123,11 @@ export type InputMediaPhoto = {
    * Optional. Caption of the photo to be sent, 0-200 characters
    */
   caption?: string,
+  /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
 }
 
 /**
@@ -1142,6 +1153,11 @@ export type InputMediaVideo = {
    */
   caption?: string,
   /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
+  /**
    * Optional. Video width
    */
   width?: number,
@@ -1153,6 +1169,10 @@ export type InputMediaVideo = {
    * Optional. Video duration
    */
   duration?: number,
+  /**
+   * Optional. Pass True, if the uploaded video is suitable for streaming
+   */
+  supports_streaming?: boolean,
 }
 
 /**
@@ -1376,6 +1396,11 @@ export type InlineQueryResultPhoto = {
    */
   caption?: string,
   /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
+  /**
    * Optional. Inline keyboard attached to the message
    */
   reply_markup?: InlineKeyboardMarkup,
@@ -1430,6 +1455,11 @@ export type InlineQueryResultGif = {
    * Optional. Caption of the GIF file to be sent, 0-200 characters
    */
   caption?: string,
+  /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
   /**
    * Optional. Inline keyboard attached to the message
    */
@@ -1486,6 +1516,11 @@ export type InlineQueryResultMpeg4Gif = {
    */
   caption?: string,
   /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
+  /**
    * Optional. Inline keyboard attached to the message
    */
   reply_markup?: InlineKeyboardMarkup,
@@ -1535,6 +1570,11 @@ export type InlineQueryResultVideo = {
    * Optional. Caption of the video to be sent, 0-200 characters
    */
   caption?: string,
+  /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
   /**
    * Optional. Video width
    */
@@ -1592,6 +1632,11 @@ export type InlineQueryResultAudio = {
    */
   caption?: string,
   /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
+  /**
    * Optional. Performer
    */
   performer?: string,
@@ -1639,6 +1684,11 @@ export type InlineQueryResultVoice = {
    */
   caption?: string,
   /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
+  /**
    * Optional. Recording duration in seconds
    */
   voice_duration?: number,
@@ -1677,6 +1727,11 @@ export type InlineQueryResultDocument = {
    * Optional. Caption of the document to be sent, 0-200 characters
    */
   caption?: string,
+  /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
   /**
    * A valid URL for the file
    */
@@ -1933,6 +1988,11 @@ export type InlineQueryResultCachedPhoto = {
    */
   caption?: string,
   /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
+  /**
    * Optional. Inline keyboard attached to the message
    */
   reply_markup?: InlineKeyboardMarkup,
@@ -1971,6 +2031,11 @@ export type InlineQueryResultCachedGif = {
    * Optional. Caption of the GIF file to be sent, 0-200 characters
    */
   caption?: string,
+  /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
   /**
    * Optional. Inline keyboard attached to the message
    */
@@ -2011,6 +2076,11 @@ export type InlineQueryResultCachedMpeg4Gif = {
    * Optional. Caption of the MPEG-4 file to be sent, 0-200 characters
    */
   caption?: string,
+  /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
   /**
    * Optional. Inline keyboard attached to the message
    */
@@ -2086,6 +2156,11 @@ export type InlineQueryResultCachedDocument = {
    */
   caption?: string,
   /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
+  /**
    * Optional. Inline keyboard attached to the message
    */
   reply_markup?: InlineKeyboardMarkup,
@@ -2129,6 +2204,11 @@ export type InlineQueryResultCachedVideo = {
    */
   caption?: string,
   /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
+  /**
    * Optional. Inline keyboard attached to the message
    */
   reply_markup?: InlineKeyboardMarkup,
@@ -2168,6 +2248,11 @@ export type InlineQueryResultCachedVoice = {
    */
   caption?: string,
   /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
+  /**
    * Optional. Inline keyboard attached to the message
    */
   reply_markup?: InlineKeyboardMarkup,
@@ -2202,6 +2287,11 @@ export type InlineQueryResultCachedAudio = {
    * Optional. Caption, 0-200 characters
    */
   caption?: string,
+  /**
+   * Optional. Send Markdown or HTML, if you want Telegram apps to show bold,
+   * italic, fixed-width text or inline URLs in the media caption.
+   */
+  parse_mode?: string,
   /**
    * Optional. Inline keyboard attached to the message
    */
@@ -2895,6 +2985,11 @@ export interface BotAPIClient {
      */
     caption?: string,
     /**
+     * Send Markdown or HTML, if you want Telegram apps to show bold, italic,
+     * fixed-width text or inline URLs in the media caption.
+     */
+    parse_mode?: string,
+    /**
      * Sends the message silently. Users will receive a notification with no
      * sound.
      */
@@ -2938,6 +3033,11 @@ export interface BotAPIClient {
      * Audio caption, 0-200 characters
      */
     caption?: string,
+    /**
+     * Send Markdown or HTML, if you want Telegram apps to show bold, italic,
+     * fixed-width text or inline URLs in the media caption.
+     */
+    parse_mode?: string,
     /**
      * Duration of the audio in seconds
      */
@@ -2992,6 +3092,11 @@ export interface BotAPIClient {
      * 0-200 characters
      */
     caption?: string,
+    /**
+     * Send Markdown or HTML, if you want Telegram apps to show bold, italic,
+     * fixed-width text or inline URLs in the media caption.
+     */
+    parse_mode?: string,
     /**
      * Sends the message silently. Users will receive a notification with no
      * sound.
@@ -3048,6 +3153,15 @@ export interface BotAPIClient {
      */
     caption?: string,
     /**
+     * Send Markdown or HTML, if you want Telegram apps to show bold, italic,
+     * fixed-width text or inline URLs in the media caption.
+     */
+    parse_mode?: string,
+    /**
+     * Pass True, if the uploaded video is suitable for streaming
+     */
+    supports_streaming?: boolean,
+    /**
      * Sends the message silently. Users will receive a notification with no
      * sound.
      */
@@ -3091,6 +3205,11 @@ export interface BotAPIClient {
      * Voice message caption, 0-200 characters
      */
     caption?: string,
+    /**
+     * Send Markdown or HTML, if you want Telegram apps to show bold, italic,
+     * fixed-width text or inline URLs in the media caption.
+     */
+    parse_mode?: string,
     /**
      * Duration of the voice message in seconds
      */
@@ -3619,10 +3738,10 @@ export interface BotAPIClient {
   /**
    * Method exportChatInviteLink
    *
-   * Use this method to export an invite link to a supergroup or a channel. The
-   * bot must be an administrator in the chat for this to work and must have the
-   * appropriate admin rights. Returns exported invite link as String on
-   * success.
+   * Use this method to generate a new invite link for a chat; any previously
+   * generated link is revoked. The bot must be an administrator in the chat for
+   * this to work and must have the appropriate admin rights. Returns the new
+   * invite link as String on success.
    */
   exportChatInviteLink: (params: {
     /**
@@ -3986,6 +4105,11 @@ export interface BotAPIClient {
      * New caption of the message
      */
     caption?: string,
+    /**
+     * Send Markdown or HTML, if you want Telegram apps to show bold, italic,
+     * fixed-width text or inline URLs in the media caption.
+     */
+    parse_mode?: string,
     /**
      * A JSON-serialized object for an inline keyboard.
      */
@@ -4356,7 +4480,7 @@ export interface BotAPIClient {
      */
     need_phone_number?: boolean,
     /**
-     * Pass True, if you require the user's email to complete the order
+     * Pass True, if you require the user's email address to complete the order
      */
     need_email?: boolean,
     /**
@@ -4364,6 +4488,14 @@ export interface BotAPIClient {
      * order
      */
     need_shipping_address?: boolean,
+    /**
+     * Pass True, if user's phone number should be sent to provider
+     */
+    send_phone_number_to_provider?: boolean,
+    /**
+     * Pass True, if user's email address should be sent to provider
+     */
+    send_email_to_provider?: boolean,
     /**
      * Pass True, if the final price depends on the shipping method
      */

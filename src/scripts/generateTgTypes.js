@@ -112,9 +112,7 @@ const isAllOptional =
       required !== 'Yes',
   )
 
-const custom = `/* :: import { ReadStream } from 'fs' */
-
-export type Result<R> = {
+const custom = `export type Result<R> = {
   ok: false,
   description: string,
   error_code: number,
@@ -126,7 +124,10 @@ export type Result<R> = {
 
 export type Res<T> = Promise<Result<T>>
 
-export type InputFile = ReadStream | string`
+export type InputFile = {
+  file: string,
+  content_type: string,
+} | Buffer | string`
 
 getRawData()
   .then(

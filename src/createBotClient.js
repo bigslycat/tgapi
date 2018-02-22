@@ -17,6 +17,7 @@ type RequestBody = { [prop: string]: any }
 const prepareBody = mapObjIndexed(
   (value, key) => {
     if (key === 'reply_markup') return JSON.stringify(value)
+    if (value instanceof Buffer) return { buffer: value, content_type: 'application/octet-stream' }
     return value
   },
 )

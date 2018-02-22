@@ -41,10 +41,19 @@ client
   //     username: "myawesomebot" } }
 
 const chat_id = 100500
-const photo = fs.createReadStream('./path/to/photo.jpg')
+const photo = fs.readFileSync('./path/to/photo.jpg')
 
 client
   .sendPhoto({ chat_id, photo })
+  .then(console.log)
+
+  // { ok: true, result: { Message object } }
+
+client
+  .sendPhoto({ chat_id, photo: {
+    file: './path/to/photo.jpg',
+    content_type: 'image/jpeg',
+  } })
   .then(console.log)
 
   // { ok: true, result: { Message object } }

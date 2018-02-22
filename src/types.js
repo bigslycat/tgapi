@@ -1,6 +1,6 @@
 /* @flow */
 
-/* :: import { Observable } from 'rxjs' */
+/* :: import { Observable, ConnectableObservable } from 'rxjs' */
 
 import type {
   Update,
@@ -97,17 +97,17 @@ export type TypedUpdate = (
 )
 
 export interface UpdateObserver extends Observer<Update> {
-    update$: Observable<TypedUpdate>,
+    update$: ConnectableObservable<TypedUpdate>,
 
-    message$: Observable<MessageUpdate>,
-    editedMessage$: Observable<EditedMessageUpdate>,
-    channelPost$: Observable<ChannelPostUpdate>,
-    editedChannelPost$: Observable<EditedChannelPostUpdate>,
-    inlineQuery$: Observable<InlineQueryUpdate>,
-    chosenInlineResult$: Observable<ChosenInlineResultUpdate>,
-    callbackQuery$: Observable<CallbackQueryUpdate>,
-    shippingQuery$: Observable<ShippingQueryUpdate>,
-    preCheckoutQuery$: Observable<PreCheckoutQueryUpdate>,
+    message$: ConnectableObservable<MessageUpdate>,
+    editedMessage$: ConnectableObservable<EditedMessageUpdate>,
+    channelPost$: ConnectableObservable<ChannelPostUpdate>,
+    editedChannelPost$: ConnectableObservable<EditedChannelPostUpdate>,
+    inlineQuery$: ConnectableObservable<InlineQueryUpdate>,
+    chosenInlineResult$: ConnectableObservable<ChosenInlineResultUpdate>,
+    callbackQuery$: ConnectableObservable<CallbackQueryUpdate>,
+    shippingQuery$: ConnectableObservable<ShippingQueryUpdate>,
+    preCheckoutQuery$: ConnectableObservable<PreCheckoutQueryUpdate>,
 }
 
 export type SpecRawType = {

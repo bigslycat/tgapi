@@ -16,117 +16,95 @@ import type { Update } from './generatedTypes'
 
 import type {
   UpdateObserver,
-  MessageUpdate,
-  EditedMessageUpdate,
-  ChannelPostUpdate,
-  EditedChannelPostUpdate,
-  InlineQueryUpdate,
-  ChosenInlineResultUpdate,
-  CallbackQueryUpdate,
-  ShippingQueryUpdate,
-  PreCheckoutQueryUpdate,
+  TypedUpdate,
 } from './types'
 
-interface Streams {
-  message$: Observable<MessageUpdate>,
-  editedMessage$: Observable<EditedMessageUpdate>,
-  channelPost$: Observable<ChannelPostUpdate>,
-  editedChannelPost$: Observable<EditedChannelPostUpdate>,
-  inlineQuery$: Observable<InlineQueryUpdate>,
-  chosenInlineResult$: Observable<ChosenInlineResultUpdate>,
-  callbackQuery$: Observable<CallbackQueryUpdate>,
-  shippingQuery$: Observable<ShippingQueryUpdate>,
-  preCheckoutQuery$: Observable<PreCheckoutQueryUpdate>,
+const formatUpdate = ({
+  /* eslint-disable camelcase */
+  update_id,
+  message,
+  edited_message,
+  channel_post,
+  edited_channel_post,
+  inline_query,
+  chosen_inline_result,
+  callback_query,
+  shipping_query,
+  pre_checkout_query,
+}: Update): TypedUpdate | void => {
+  if (message) return { update_id, message, type: 'message' }
+  if (edited_message) return { update_id, edited_message, type: 'edited_message' }
+  if (channel_post) return { update_id, channel_post, type: 'channel_post' }
+  if (edited_channel_post) return { update_id, edited_channel_post, type: 'edited_channel_post' }
+  if (inline_query) return { update_id, inline_query, type: 'inline_query' }
+  if (chosen_inline_result) return { update_id, chosen_inline_result, type: 'chosen_inline_result' }
+  if (callback_query) return { update_id, callback_query, type: 'callback_query' }
+  if (shipping_query) return { update_id, shipping_query, type: 'shipping_query' }
+  if (pre_checkout_query) return { update_id, pre_checkout_query, type: 'pre_checkout_query' }
+  /* eslint-enable camelcase */
 }
 
 export default (): UpdateObserver => {
-  const update$: Subject<Update> = new Subject()
+  const rawUpdate$: Subject<Update> = new Subject()
 
-  /* eslint-disable camelcase */
+  const update$ = rawUpdate$
+    .map(formatUpdate)
+    .mergeMap((update: TypedUpdate | void): Observable<TypedUpdate> =>
+      update ? Observable.of(update) : Observable.empty())
+    .publish()
 
-  const streams: Streams = {
+  const message$ = update$.mergeMap((update: TypedUpdate) =>
+    update.type === 'message' ? Observable.of(update) : Observable.empty()).publish()
 
-    message$: update$.mergeMap(
-      ({ update_id, message }) => message ?
-        Observable.of({ update_id, message, type: 'message' }) :
-        Observable.empty(),
-    ),
+  const editedMessage$ = update$.mergeMap((update: TypedUpdate) =>
+    update.type === 'edited_message' ? Observable.of(update) : Observable.empty()).publish()
 
-    editedMessage$: update$.mergeMap(
-      ({ update_id, edited_message }) => edited_message ?
-        Observable.of({ update_id, edited_message, type: 'edited_message' }) :
-        Observable.empty(),
-    ),
+  const channelPost$ = update$.mergeMap((update: TypedUpdate) =>
+    update.type === 'channel_post' ? Observable.of(update) : Observable.empty()).publish()
 
-    channelPost$: update$.mergeMap(
-      ({ update_id, channel_post }) => channel_post ?
-        Observable.of({ update_id, channel_post, type: 'channel_post' }) :
-        Observable.empty(),
-    ),
+  const editedChannelPost$ = update$.mergeMap((update: TypedUpdate) =>
+    update.type === 'edited_channel_post' ? Observable.of(update) : Observable.empty()).publish()
 
-    editedChannelPost$: update$.mergeMap(
-      ({ update_id, edited_channel_post }) => edited_channel_post ?
-        Observable.of({ update_id, edited_channel_post, type: 'edited_channel_post' }) :
-        Observable.empty(),
-    ),
+  const inlineQuery$ = update$.mergeMap((update: TypedUpdate) =>
+    update.type === 'inline_query' ? Observable.of(update) : Observable.empty()).publish()
 
-    inlineQuery$: update$.mergeMap(
-      ({ update_id, inline_query }) => inline_query ?
-        Observable.of({ update_id, inline_query, type: 'inline_query' }) :
-        Observable.empty(),
-    ),
+  const chosenInlineResult$ = update$.mergeMap((update: TypedUpdate) =>
+    update.type === 'chosen_inline_result' ? Observable.of(update) : Observable.empty()).publish()
 
-    chosenInlineResult$: update$.mergeMap(
-      ({ update_id, chosen_inline_result }) => chosen_inline_result ?
-        Observable.of({ update_id, chosen_inline_result, type: 'chosen_inline_result' }) :
-        Observable.empty(),
-    ),
+  const callbackQuery$ = update$.mergeMap((update: TypedUpdate) =>
+    update.type === 'callback_query' ? Observable.of(update) : Observable.empty()).publish()
 
-    callbackQuery$: update$.mergeMap(
-      ({ update_id, callback_query }) => callback_query ?
-        Observable.of({ update_id, callback_query, type: 'callback_query' }) :
-        Observable.empty(),
-    ),
+  const shippingQuery$ = update$.mergeMap((update: TypedUpdate) =>
+    update.type === 'shipping_query' ? Observable.of(update) : Observable.empty()).publish()
 
-    shippingQuery$: update$.mergeMap(
-      ({ update_id, shipping_query }) => shipping_query ?
-        Observable.of({ update_id, shipping_query, type: 'shipping_query' }) :
-        Observable.empty(),
-    ),
+  const preCheckoutQuery$ = update$.mergeMap((update: TypedUpdate) =>
+    update.type === 'pre_checkout_query' ? Observable.of(update) : Observable.empty()).publish()
 
-    preCheckoutQuery$: update$.mergeMap(
-      ({ update_id, pre_checkout_query }) => pre_checkout_query ?
-        Observable.of({ update_id, pre_checkout_query, type: 'pre_checkout_query' }) :
-        Observable.empty(),
-    ),
-  }
-
-  /* eslint-enable camelcase */
+  update$.connect()
+  message$.connect()
+  editedMessage$.connect()
+  channelPost$.connect()
+  editedChannelPost$.connect()
+  inlineQuery$.connect()
+  chosenInlineResult$.connect()
+  callbackQuery$.connect()
+  shippingQuery$.connect()
+  preCheckoutQuery$.connect()
 
   return {
-    next: (update: Update) => update$.next(update),
-    error: error => update$.error(error),
-    complete: () => update$.complete(),
+    next: (update: Update) => rawUpdate$.next(update),
+    error: (error: any) => rawUpdate$.error(error),
+    complete: () => rawUpdate$.complete(),
 
-    ...streams,
-
-    update$: (
-      Observable
-        .merge(
-          streams.message$,
-          streams.editedMessage$,
-          streams.channelPost$,
-          streams.editedChannelPost$,
-          streams.inlineQuery$,
-          streams.chosenInlineResult$,
-          streams.callbackQuery$,
-          streams.shippingQuery$,
-          streams.preCheckoutQuery$,
-        )
-        .distinctUntilChanged((prev, next) => (
-          prev.update_id === next.update_id &&
-          prev.type === next.type
-        ))
-    ),
+    update$,
+    message$,
+    editedMessage$,
+    channelPost$,
+    editedChannelPost$,
+    inlineQuery$,
+    chosenInlineResult$,
+    callbackQuery$,
+    shippingQuery$,
+    preCheckoutQuery$,
   }
 }

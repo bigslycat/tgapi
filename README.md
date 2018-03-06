@@ -76,20 +76,20 @@ Etc. for all other [methods][Available methods].
   - `options.allowedUpdates` — *optional* `Array<string>`, allowed [update types][getUpdates]
 
 ```javascript
-const observer = {
-  next: update => console.log('Update id is', update.update_id),
-  error: console.error,
+const listener = (err, update) => {
+  if (err) console.error(err)
+  else console.log('Update id is', update.update_id)
 }
 
 const options = {
-  timeout: 2,
+  timeout: 60,
   allowedUpdates: [
     'message',
     'edited_message',
   ],
 }
 
-const unsubscribe = tg.createUpdateSubscription(client, observer, options)
+const unsubscribe = tg.createUpdateSubscription(client, listener, options)
 ```
 
 #### [Express][] or [Connect][] middleware
@@ -126,6 +126,17 @@ Obviously, you can use any observer for handling updates. For example, the insta
 updates in the [Observable streams][rx]:
 
 `createUpdateObserver() => UpdateObserver`
+
+```javascript
+const observer = {
+  next: update => console.log('Update id is', update.update_id),
+  error: console.error,
+}
+
+const options = { timeout: 60 }
+
+const unsubscribe = tg.createUpdateSubscription(client, observer, options)
+```
 
 ##### UpdateObserver instance
 

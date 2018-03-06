@@ -19,10 +19,15 @@ export interface Observer<T> {
 }
 
 export type PartialObserver<T> = {
-  next: (value: T) => mixed,
-  error?: (error: any) => mixed,
-  complete?: () => mixed,
+  +next: (value: T) => mixed,
+  +error?: (error: any) => mixed,
+  +complete?: () => mixed,
 }
+
+export type Listener =
+  ((error: void, update: Update, complete: false) => any) &
+  ((error: Object, update: void, complete: false) => any) &
+  ((error: void, update: void, complete: true) => any)
 
 export type UpdateType = (
   'message' | 'edited_message' | 'channel_post' | 'edited_channel_post' |

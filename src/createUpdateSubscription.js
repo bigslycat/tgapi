@@ -15,7 +15,7 @@ import { last } from 'ramda'
 
 import type { Client } from './createBotClient'
 
-import type { PartialObserver } from './types'
+import type { PartialObserver, Listener } from './types'
 import type { Update } from './generatedTypes'
 
 type RequestParams = {
@@ -40,7 +40,7 @@ type Options = {
 
 export default (
   client: Client,
-  observer$: PartialObserver<Update>,
+  observer: Listener | PartialObserver<Update>,
   options: Options = {},
 ) => {
   const getParams = getRequesrParams(
@@ -75,7 +75,13 @@ export default (
     }).subscribe(subject$)
 
   const updatesSubscription =
-    updates$.subscribe(observer$)
+    typeof observer === 'object'
+      ? updates$.subscribe(observer)
+      : (fn => updates$.subscribe(
+        update => fn(undefined, update, false),
+        error => fn(error, undefined, false),
+        () => fn(undefined, undefined, true),
+      ))(observer)
 
   return () => {
     offsetSubscription.unsubscribe()

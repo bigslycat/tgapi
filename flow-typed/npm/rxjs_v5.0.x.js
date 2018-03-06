@@ -1,15 +1,5 @@
-// flow-typed signature: 40d60f46fb115f551b496c572b577cfe
-// flow-typed version: 55b9091816/rxjs_v5.0.x/flow_>=v0.34.x
-
-// FIXME(samgoldman) Remove top-level interface once Babel supports
-// `declare interface` syntax.
-// FIXME(samgoldman) Remove this once rxjs$Subject<T> can mixin rxjs$Observer<T>
-interface rxjs$IObserver<-T> {
-  closed?: boolean;
-  next(value: T): mixed;
-  error(error: any): mixed;
-  complete(): mixed;
-}
+// flow-typed signature: 38721edcfebb45636ff31e0c10937999
+// flow-typed version: 7fa26915f1/rxjs_v5.0.x/flow_>=v0.34.x
 
 type rxjs$PartialObserver<-T> =
   | {
@@ -28,7 +18,7 @@ type rxjs$PartialObserver<-T> =
       +complete: () => mixed
     };
 
-interface rxjs$ISubscription {
+declare interface rxjs$ISubscription {
   unsubscribe(): void;
 }
 
@@ -411,7 +401,7 @@ declare class rxjs$Observable<+T> {
   defaultIfEmpty<U>(defaultValue: U): rxjs$Observable<T | U>;
 
   delay(dueTime: number, scheduler?: rxjs$SchedulerClass): rxjs$Observable<T>;
-  
+
   delayWhen(
     delayDurationSelector: (value: T) => rxjs$Observable<any>,
     subscriptionDelay?: rxjs$Observable<any>
@@ -1482,11 +1472,9 @@ declare class rxjs$GroupedObservable<K, V> extends rxjs$Observable<V> {
   key: K;
 }
 
-declare class rxjs$Observer<T> {
+declare class rxjs$Observer<-T> {
   next(value: T): mixed;
-
   error(error: any): mixed;
-
   complete(): mixed;
 }
 
@@ -1494,19 +1482,15 @@ declare interface rxjs$Operator<T, R> {
   call(subscriber: rxjs$Subscriber<R>, source: any): rxjs$TeardownLogic;
 }
 
-// FIXME(samgoldman) should be `mixins rxjs$Observable<T>, rxjs$Observer<T>`
-// once Babel parsing support exists: https://phabricator.babeljs.io/T6821
-declare class rxjs$Subject<T> extends rxjs$Observable<T> {
+declare class rxjs$Subject<T> mixins rxjs$Observable<T>, rxjs$Observer<T> {
+  static create<T>(
+    destination: rxjs$Observer<T>,
+    source: rxjs$Observable<T>
+  ): rxjs$AnonymousSubject<T>;
+
   asObservable(): rxjs$Observable<T>;
-
   observers: Array<rxjs$Observer<T>>;
-
   unsubscribe(): void;
-
-  // Copied from rxjs$Observer<T>
-  next(value: T): mixed;
-  error(error: any): mixed;
-  complete(): mixed;
 
   // For use in subclasses only:
   _next(value: T): void;
@@ -1517,12 +1501,9 @@ declare class rxjs$AnonymousSubject<T> extends rxjs$Subject<T> {
   destination: ?rxjs$Observer<T>;
 
   constructor(
-    destination?: rxjs$IObserver<T>,
+    destination?: rxjs$Observer<T>,
     source?: rxjs$Observable<T>
   ): void;
-  next(value: T): void;
-  error(err: any): void;
-  complete(): void;
 }
 
 declare class rxjs$BehaviorSubject<T> extends rxjs$Subject<T> {

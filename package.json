@@ -1,6 +1,6 @@
 {
   "name": "tgapi",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Actual Telegram bot API with Rx-driven updates and full Flow type coverage",
   "main": "lib/bundle.js",
   "engines": {

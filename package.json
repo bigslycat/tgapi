@@ -36,7 +36,7 @@
     "body-parser": "1.18.2",
     "needle": "^2.2.0",
     "ramda": "^0.25.0",
-    "rxjs": "^5.5.7"
+    "rxjs": "^5.5.8"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -50,7 +50,7 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-flowtype": "^2.46.1",
     "eslint-plugin-import": "^2.9.0",
-    "flow-bin": "^0.68.0",
+    "flow-bin": "^0.69.0",
     "flow-typed": "^2.4.0",
     "husky": "^0.14.3",
     "nightmare": "^3.0.0",

@@ -1,15 +1,6 @@
 /* @flow */
 
-import { Observable } from 'rxjs/Observable'
-import { Subject } from 'rxjs/Subject'
-
-import 'rxjs/add/observable/from'
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/startWith'
-import 'rxjs/add/operator/mergeMap'
-import 'rxjs/add/operator/publish'
-import 'rxjs/add/operator/filter'
-import 'rxjs/add/operator/pluck'
+import { Observable, Subject } from 'rxjs'
 
 import { last } from 'ramda'
 

@@ -10,17 +10,8 @@
     "README.md",
     "LICENSE.md",
     "lib",
-    "src/util",
-    "src/createBotClient.js",
-    "src/createMiddleware.js",
-    "src/createUpdateObserver.js",
-    "src/createUpdateSubscription.js",
-    "src/createWebhookServer.js",
-    "src/generatedTypes.js",
-    "src/HTTPError.js",
-    "src/index.js",
-    "src/setWebhookToServer.js",
-    "src/types.js"
+    "esm",
+    "src"
   ],
   "scripts": {
     "build": "rollup -c",

@@ -1,5 +1,5 @@
-// flow-typed signature: ed27d47a7cd7e7635bd617f079d1c95e
-// flow-typed version: da30fe6876/jquery_v3.x.x/flow_>=v0.28.x
+// flow-typed signature: d71d314ca25fc6c20610a3ba80af9df0
+// flow-typed version: 9698a46399/jquery_v3.x.x/flow_>=v0.28.x
 
 /* eslint-disable max-len, no-unused-vars, flowtype/no-weak-types */
 
@@ -1782,6 +1782,12 @@ declare class JQuery {
   clearQueue(queueName?: string): JQuery;
 
   /**
+   * Return the value: any at the named data store for the first element in the jQuery collection, as set by data(name, value) or by an HTML5 data-* attribute.
+   *
+   * @param key Name of the data stored.
+   */
+  data(key: string, _: void): any;
+  /**
    * Store arbitrary data associated with the matched elements.
    *
    * @param key A string naming the piece of data to set.
@@ -1796,12 +1802,6 @@ declare class JQuery {
   data(obj: {
     [key: string]: any
   }): JQuery;
-  /**
-   * Return the value: any at the named data store for the first element in the jQuery collection, as set by data(name, value) or by an HTML5 data-* attribute.
-   *
-   * @param key Name of the data stored.
-   */
-  data(key: string, _: void): any;
   /**
    * Return the value: any at the named data store for the first element in the jQuery collection, as set by data(name, value) or by an HTML5 data-* attribute.
    */
@@ -2639,6 +2639,16 @@ declare class JQuery {
     events: string,
     selector: string,
     handler: (eventObject: JQueryEventObject) => any
+  ): JQuery;
+  /**
+   * Remove an event handler.
+   *
+   * @param events One or more space-separated event types and optional namespaces, or just namespaces, such as "click", "keydown.myPlugin", or ".myPlugin".
+   * @param selector A selector which should match the one originally passed to .on() when attaching event handlers.
+   */
+  off(
+    events: string,
+    selector: string
   ): JQuery;
   /**
    * Remove an event handler.

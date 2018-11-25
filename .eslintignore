@@ -1,4 +1,6 @@
-/lib/*
-!/lib/bundle.js.flow
-/flow-typed/npm
+/node_modules
 /coverage
+/esm
+/lib
+/flow-typed/npm
+/.nyc_output

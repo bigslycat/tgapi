@@ -1,48 +1,73 @@
-import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
+import flowEntry from 'rollup-plugin-flow-entry'
+import clear from 'rollup-plugin-clear'
 
 import packageJson from './package.json'
 
-const deps =
-  Object.keys(packageJson.dependencies)
-    .concat('http', 'url')
-    .join('|')
+const { dependencies } = packageJson
 
-const reg = new RegExp(`^(${deps})($|/)`)
+const deps = dependencies && Object.keys(dependencies).join('|')
+const reg = deps && new RegExp(`^(${deps})($|/)`)
 
 const banner = `
 /**
- * tgapi v${packageJson.version}
+ * ${packageJson.name} v${packageJson.version}
  * ${packageJson.description}
  */
 `
 
-export default {
-  input: 'src/index.js',
-  output: {
-    file: 'lib/bundle.js',
-    format: 'cjs',
-    banner,
+const external = id => !!reg && reg.test(id)
+
+export default [
+  {
+    input: 'src/index.js',
+    output: {
+      file: 'lib/index.js',
+      format: 'cjs',
+      banner,
+    },
+    plugins: [
+      clear({
+        targets: ['lib'],
+      }),
+      flowEntry(),
+      babel({
+        exclude: 'node_modules/**',
+      }),
+      commonjs(),
+    ],
+    treeshake: true,
+    external,
   },
-  plugins: [
-    babel({
-      babelrc: false,
-      exclude: 'node_modules/**',
-      plugins: [
-        'ramda',
-        'transform-object-rest-spread',
-      ],
-      presets: [
-        'flow',
-        ['env', {
-          targets: { node: 6 },
-          modules: false,
-        }],
-      ],
-    }),
-    resolve(),
-    commonjs(),
-  ],
-  external: id => reg.test(id),
-}
+  {
+    input: 'src/index.js',
+    output: {
+      file: 'esm/index.mjs',
+      format: 'esm',
+      banner,
+    },
+    plugins: [
+      clear({
+        targets: ['esm'],
+      }),
+      flowEntry(),
+      babel({
+        exclude: 'node_modules/**',
+        presets: [
+          [
+            '@babel/env',
+            {
+              targets: { node: 10 },
+              useBuiltIns: 'usage',
+              modules: false,
+            },
+          ],
+        ],
+      }),
+      commonjs(),
+    ],
+    treeshake: true,
+    external,
+  },
+]

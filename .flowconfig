@@ -7,7 +7,5 @@
 [lints]
 
 [options]
-module.system=haste
-esproposal.export_star_as=enable
 
 [strict]

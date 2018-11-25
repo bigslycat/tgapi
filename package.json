@@ -23,14 +23,21 @@
     "src/types.js"
   ],
   "scripts": {
+    "build": "rollup -c",
+    "flow-entry": "cp lib/index.js.flow esm/index.js.flow",
+    "generate-core": "NODE_ENV=script babel-node src/scripts/generateCore",
     "lint": "eslint .",
     "flow": "flow",
-    "posttyped": "flow-typed install jquery@3.2.1",
-    "tg-types": "babel-node src/scripts/generateTgTypes",
-    "transpile": "rollup -c",
-    "precommit": "yarn lint && yarn flow",
-    "preversion": "git checkout master && yarn precommit",
+    "test": "ava --verbose",
+    "test:nyc": "nyc ava --verbose",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "preversion": "git checkout master && yarn lint && yarn flow",
     "postversion": "git push --follow-tags"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn flow"
+    }
   },
   "dependencies": {
     "core-js": "^2.5.7",

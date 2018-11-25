@@ -1,8 +1,9 @@
-/node_modules
-/lib/*
-!/lib/bundle.js.flow
-/coverage
+node_modules
+coverage
+esm
+lib
+.nyc_output
 *.log
-*.log-*
 *.log.*
+*.log-*
 *.log_*

@@ -2,10 +2,10 @@
   "name": "tgapi",
   "version": "2.0.0",
   "description": "Actual Telegram bot API with Rx-driven updates and full Flow type coverage",
-  "main": "lib/bundle.js",
-  "engines": {
-    "node": ">=6.0.0"
-  },
+  "repository": "bigslycat/tgapi",
+  "author": "Pavel Tereschenko <me@stupidcat.wtf> (https://github.com/bigslycat)",
+  "license": "MIT",
+  "main": "lib/index.js",
   "files": [
     "README.md",
     "LICENSE.md",
@@ -71,30 +71,13 @@
     "sinon": "^7.1.1",
     "wordwrap": "^1.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bigslycat/tgapi.git"
-  },
   "keywords": [
     "API",
     "bot",
     "bots",
     "Telegram",
     "tg",
-    "rx",
-    "rxjs",
-    "reactive",
     "flow",
     "flowtype"
-  ],
-  "author": {
-    "name": "Pavel Tereschenko",
-    "email": "me@pavlik.pro",
-    "url": "https://github.com/bigslycat"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bigslycat/tgapi/issues"
-  },
-  "homepage": "https://github.com/bigslycat/tgapi#readme"
+  ]
 }

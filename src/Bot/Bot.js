@@ -19,6 +19,7 @@ export class Bot extends BotCore {
 
     if (typeof config == 'string') {
       privates.setToken(this, config)
+      privates.setUserCallMethod(this, callMethod)
     } else {
       privates.setToken(this, config.token)
       privates.setUserCallMethod(this, config.callMethod || callMethod)

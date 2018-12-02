@@ -2,8 +2,8 @@
 
 import EventEmitter from 'events'
 
+import type { Bot } from './Bot'
 import type { UpdateType } from './types'
-import type { BotCore } from './generated'
 import { Subscriber, getConnected } from './Subscriber'
 
 import { getSet } from '../util'
@@ -62,7 +62,7 @@ const getUpdates = (emitter: EventEmitter) => {
 }
 
 export type Options = {
-  bot: BotCore,
+  bot: Bot,
   limit?: number,
   timeout?: number,
   allowedUpdates?: Iterable<UpdateType>,
@@ -77,6 +77,10 @@ export class PollingSubscriber extends Subscriber {
       ...options,
       allowedUpdates: allowedUpdates && [...allowedUpdates],
     })
+  }
+
+  get bot(): Bot {
+    return getOptions(this).bot
   }
 
   setLimit(limit?: number) {

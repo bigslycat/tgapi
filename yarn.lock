@@ -282,16 +282,14 @@
     js-tokens "^4.0.0"
 
 "@babel/node@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@babel/node/-/node-7.0.0.tgz#20e55bb0e015700a0f6ff281c712de7619ad56f4"
-  integrity sha512-mKbN8Bb1TzH9YnKMWMhBRX+o5MVJHtUSalNcsiGa4FRgVfY7ozqkbttuIDWqeXxZ3rwI9ZqmCUr9XsPV2VYlSw==
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@babel/node/-/node-7.2.0.tgz#0b601be8ef03897923e3908dc18129836d44e6fa"
+  integrity sha512-RFwVH5xWpwd4SfkOI0WsK9AnF5o+C9iMTvUkkTb7jUNaiDieV8BGK38t74bTPjgc4FCxSAWNKqaqgDW4fenkyA==
   dependencies:
     "@babel/polyfill" "^7.0.0"
     "@babel/register" "^7.0.0"
     commander "^2.8.1"
-    fs-readdir-recursive "^1.0.0"
     lodash "^4.17.10"
-    output-file-sync "^2.0.0"
     v8flags "^3.1.1"
 
 "@babel/parser@^7.0.0", "@babel/parser@^7.1.2", "@babel/parser@^7.1.6":
@@ -3008,7 +3006,7 @@ fs-minipass@^1.2.5:
   dependencies:
     minipass "^2.2.1"
 
-fs-readdir-recursive@^1.0.0, fs-readdir-recursive@^1.1.0:
+fs-readdir-recursive@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/fs-readdir-recursive/-/fs-readdir-recursive-1.1.0.tgz#e32fc030a2ccee44a6b5371308da54be0b397d27"
   integrity sha512-GNanXlVr2pf02+sPN40XN8HG+ePaNcvM0q5mZBd668Obwb0yD5GiUbZOFgwn8kGMY6I3mdyDJzieUy3PTYyTRA==

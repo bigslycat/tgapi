@@ -55,7 +55,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
     "esm": "^3.0.84",
-    "flow-bin": "^0.88.0",
+    "flow-bin": "^0.89.0",
     "flow-typed": "^2.5.1",
     "husky": "^1.2.0",
     "jquery": "^3.3.1",

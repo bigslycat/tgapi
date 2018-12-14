@@ -1,6 +1,6 @@
 {
   "name": "tgapi",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Actual Telegram bot API JS implementation",
   "repository": "bigslycat/tgapi",
   "author": "Pavel Tereschenko <me@stupidcat.wtf> (https://github.com/bigslycat)",

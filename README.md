@@ -1,5 +1,7 @@
 # tgapi [![Build Status][status-img]][status-url]
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/bigslycat/tgapi.svg)](https://greenkeeper.io/)
+
 Actual Telegram bot API JS implementation
 
 ## Installation

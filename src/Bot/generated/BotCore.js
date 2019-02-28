@@ -340,9 +340,10 @@ export class BotCore {
     title?: string,
 
     /**
-     * Thumbnail of the file sent. The thumbnail should be in JPEG format and
-     * less than 200 kB in size. A thumbnail‘s width and height should not
-     * exceed 90. Ignored if the file is not uploaded using
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for
+     * the file is supported server-side. The thumbnail should be in JPEG
+     * format and less than 200 kB in size. A thumbnail‘s width and height
+     * should not exceed 90. Ignored if the file is not uploaded using
      * multipart/form-data. Thumbnails can’t be reused and can be only uploaded
      * as a new file, so you can pass “attach://<file_attach_name>” if the
      * thumbnail was uploaded using multipart/form-data under
@@ -401,9 +402,10 @@ export class BotCore {
     document: a.InputFile | string,
 
     /**
-     * Thumbnail of the file sent. The thumbnail should be in JPEG format and
-     * less than 200 kB in size. A thumbnail‘s width and height should not
-     * exceed 90. Ignored if the file is not uploaded using
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for
+     * the file is supported server-side. The thumbnail should be in JPEG
+     * format and less than 200 kB in size. A thumbnail‘s width and height
+     * should not exceed 90. Ignored if the file is not uploaded using
      * multipart/form-data. Thumbnails can’t be reused and can be only uploaded
      * as a new file, so you can pass “attach://<file_attach_name>” if the
      * thumbnail was uploaded using multipart/form-data under
@@ -490,9 +492,10 @@ export class BotCore {
     height?: number,
 
     /**
-     * Thumbnail of the file sent. The thumbnail should be in JPEG format and
-     * less than 200 kB in size. A thumbnail‘s width and height should not
-     * exceed 90. Ignored if the file is not uploaded using
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for
+     * the file is supported server-side. The thumbnail should be in JPEG
+     * format and less than 200 kB in size. A thumbnail‘s width and height
+     * should not exceed 90. Ignored if the file is not uploaded using
      * multipart/form-data. Thumbnails can’t be reused and can be only uploaded
      * as a new file, so you can pass “attach://<file_attach_name>” if the
      * thumbnail was uploaded using multipart/form-data under
@@ -584,9 +587,10 @@ export class BotCore {
     height?: number,
 
     /**
-     * Thumbnail of the file sent. The thumbnail should be in JPEG format and
-     * less than 200 kB in size. A thumbnail‘s width and height should not
-     * exceed 90. Ignored if the file is not uploaded using
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for
+     * the file is supported server-side. The thumbnail should be in JPEG
+     * format and less than 200 kB in size. A thumbnail‘s width and height
+     * should not exceed 90. Ignored if the file is not uploaded using
      * multipart/form-data. Thumbnails can’t be reused and can be only uploaded
      * as a new file, so you can pass “attach://<file_attach_name>” if the
      * thumbnail was uploaded using multipart/form-data under
@@ -736,9 +740,10 @@ export class BotCore {
     length?: number,
 
     /**
-     * Thumbnail of the file sent. The thumbnail should be in JPEG format and
-     * less than 200 kB in size. A thumbnail‘s width and height should not
-     * exceed 90. Ignored if the file is not uploaded using
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for
+     * the file is supported server-side. The thumbnail should be in JPEG
+     * format and less than 200 kB in size. A thumbnail‘s width and height
+     * should not exceed 90. Ignored if the file is not uploaded using
      * multipart/form-data. Thumbnails can’t be reused and can be only uploaded
      * as a new file, so you can pass “attach://<file_attach_name>” if the
      * thumbnail was uploaded using multipart/form-data under
@@ -1780,13 +1785,13 @@ export class BotCore {
   /**
    * editMessageMedia
    *
-   * Use this method to edit audio, document, photo, or video messages. If a
-   * message is a part of a message album, then it can be edited only to a
-   * photo or a video. Otherwise, message type can be changed arbitrarily. When
-   * inline message is edited, new file can't be uploaded. Use previously
-   * uploaded file via its file_id or specify a URL. On success, if the edited
-   * message was sent by the bot, the edited Message is returned, otherwise
-   * True is returned.
+   * Use this method to edit animation, audio, document, photo, or video
+   * messages. If a message is a part of a message album, then it can be edited
+   * only to a photo or a video. Otherwise, message type can be changed
+   * arbitrarily. When inline message is edited, new file can't be uploaded.
+   * Use previously uploaded file via its file_id or specify a URL. On success,
+   * if the edited message was sent by the bot, the edited Message is returned,
+   * otherwise True is returned.
    */
   editMessageMedia(props: {
     /**
@@ -1869,13 +1874,23 @@ export class BotCore {
    * deleteMessage
    *
    * Use this method to delete a message, including service messages, with the
-   * following limitations:- A message can only be deleted if it was sent less
-   * than 48 hours ago.- Bots can delete outgoing messages in private chats,
-   * groups, and supergroups.- Bots granted can_post_messages permissions can
-   * delete outgoing messages in channels.- If the bot is an administrator of a
-   * group, it can delete any message there.- If the bot has
-   * can_delete_messages permission in a supergroup or a channel, it can delete
-   * any message there.Returns True on success.
+   * following limitations:
+   *
+   * - A message can only be deleted if it was sent less than 48 hours ago.
+   *
+   * - Bots can delete outgoing messages in private chats, groups, and
+   * supergroups.
+   *
+   * - Bots granted can_post_messages permissions can delete outgoing messages
+   * in channels.
+   *
+   * - If the bot is an administrator of a group, it can delete any message
+   * there.
+   *
+   * - If the bot has can_delete_messages permission in a supergroup or a
+   * channel, it can delete any message there.
+   *
+   * Returns True on success.
    */
   deleteMessage(props: {
     /**
@@ -2120,7 +2135,9 @@ export class BotCore {
    * answerInlineQuery
    *
    * Use this method to send answers to an inline query. On success, True is
-   * returned.No more than 50 results per query are allowed.
+   * returned.
+   *
+   * No more than 50 results per query are allowed.
    */
   answerInlineQuery(props: {
     /**

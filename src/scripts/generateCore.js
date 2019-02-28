@@ -140,7 +140,15 @@ const renderProps = (props: $ReadOnlyArray<Prop>) => {
     header
       .nextUntil('h3, h4, .table', 'p')
       .toArray()
-      .map(getText)
+      .reduce((acc, el) => {
+        $(el)
+          .html()
+          .split(/<br(\s*\/)?>/)
+          .forEach(p => acc.push(p))
+        return acc
+      }, [])
+      .filter(p => p != null)
+      .map(p => $(`<p>${p}</p>`).text())
 
   const getTable = header =>
     header

@@ -3,8 +3,9 @@
 /**
  * Update
  *
- * This object represents an incoming update.At most one of the optional
- * parameters can be present in any given update.
+ * This object represents an incoming update.
+ *
+ * At most one of the optional parameters can be present in any given update.
  */
 export type Update = {
   /**
@@ -212,8 +213,10 @@ export type Chat = {
   description?: string,
 
   /**
-   * Optional. Chat invite link, for supergroups and channel chats. Returned
-   * only in getChat.
+   * Optional. Chat invite link, for supergroups and channel chats. Each
+   * administrator in a chat generates their own invite links, so the bot
+   * must first generate the link using exportChatInviteLink. Returned only
+   * in getChat.
    */
   invite_link?: string,
 
@@ -381,8 +384,8 @@ export type Message = {
   video_note?: VideoNote,
 
   /**
-   * Optional. Caption for the audio, document, photo, video or voice, 0-1024
-   * characters
+   * Optional. Caption for the animation, audio, document, photo, video or
+   * voice, 0-1024 characters
    */
   caption?: string,
 
@@ -1378,9 +1381,10 @@ export type InputMediaVideo = {
   media: string,
 
   /**
-   * Optional. Thumbnail of the file sent. The thumbnail should be in JPEG
-   * format and less than 200 kB in size. A thumbnail‘s width and height
-   * should not exceed 90. Ignored if the file is not uploaded using
+   * Optional. Thumbnail of the file sent; can be ignored if thumbnail
+   * generation for the file is supported server-side. The thumbnail should
+   * be in JPEG format and less than 200 kB in size. A thumbnail‘s width and
+   * height should not exceed 90. Ignored if the file is not uploaded using
    * multipart/form-data. Thumbnails can’t be reused and can be only uploaded
    * as a new file, so you can pass “attach://<file_attach_name>” if the
    * thumbnail was uploaded using multipart/form-data under
@@ -1442,9 +1446,10 @@ export type InputMediaAnimation = {
   media: string,
 
   /**
-   * Optional. Thumbnail of the file sent. The thumbnail should be in JPEG
-   * format and less than 200 kB in size. A thumbnail‘s width and height
-   * should not exceed 90. Ignored if the file is not uploaded using
+   * Optional. Thumbnail of the file sent; can be ignored if thumbnail
+   * generation for the file is supported server-side. The thumbnail should
+   * be in JPEG format and less than 200 kB in size. A thumbnail‘s width and
+   * height should not exceed 90. Ignored if the file is not uploaded using
    * multipart/form-data. Thumbnails can’t be reused and can be only uploaded
    * as a new file, so you can pass “attach://<file_attach_name>” if the
    * thumbnail was uploaded using multipart/form-data under
@@ -1500,9 +1505,10 @@ export type InputMediaAudio = {
   media: string,
 
   /**
-   * Optional. Thumbnail of the file sent. The thumbnail should be in JPEG
-   * format and less than 200 kB in size. A thumbnail‘s width and height
-   * should not exceed 90. Ignored if the file is not uploaded using
+   * Optional. Thumbnail of the file sent; can be ignored if thumbnail
+   * generation for the file is supported server-side. The thumbnail should
+   * be in JPEG format and less than 200 kB in size. A thumbnail‘s width and
+   * height should not exceed 90. Ignored if the file is not uploaded using
    * multipart/form-data. Thumbnails can’t be reused and can be only uploaded
    * as a new file, so you can pass “attach://<file_attach_name>” if the
    * thumbnail was uploaded using multipart/form-data under
@@ -1558,9 +1564,10 @@ export type InputMediaDocument = {
   media: string,
 
   /**
-   * Optional. Thumbnail of the file sent. The thumbnail should be in JPEG
-   * format and less than 200 kB in size. A thumbnail‘s width and height
-   * should not exceed 90. Ignored if the file is not uploaded using
+   * Optional. Thumbnail of the file sent; can be ignored if thumbnail
+   * generation for the file is supported server-side. The thumbnail should
+   * be in JPEG format and less than 200 kB in size. A thumbnail‘s width and
+   * height should not exceed 90. Ignored if the file is not uploaded using
    * multipart/form-data. Thumbnails can’t be reused and can be only uploaded
    * as a new file, so you can pass “attach://<file_attach_name>” if the
    * thumbnail was uploaded using multipart/form-data under

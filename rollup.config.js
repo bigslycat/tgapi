@@ -60,6 +60,7 @@ export default [
             {
               targets: { node: 10 },
               useBuiltIns: 'usage',
+              corejs: { version: 3, proposals: true },
               modules: false,
             },
           ],

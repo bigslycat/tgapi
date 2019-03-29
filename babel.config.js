@@ -1,11 +1,9 @@
 const env = ({ modules = false } = {}) => [
   '@babel/env',
   {
-    targets: {
-      node: 6,
-      browsers: ['last 4 version', '> 1%', 'not dead'],
-    },
+    targets: { node: 6 },
     useBuiltIns: 'usage',
+    corejs: { version: 3, proposals: true },
     modules: modules && 'commonjs',
   },
 ]
@@ -25,6 +23,7 @@ module.exports = {
           {
             targets: { node: 'current' },
             useBuiltIns: 'usage',
+            corejs: { version: 3, proposals: true },
             modules: 'commonjs',
           },
         ],

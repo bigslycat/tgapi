@@ -2,7 +2,7 @@
 
 import EventEmitter from 'events'
 
-import type { Bot } from './Bot'
+/* :: import type { Bot } from './Bot' */
 import type { UpdateType } from './types'
 import { Subscriber, getConnected } from './Subscriber'
 

@@ -66,7 +66,7 @@
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-clear": "^2.0.7",
     "rollup-plugin-commonjs": "^9.3.4",
-    "rollup-plugin-flow-entry": "^0.3.1",
+    "rollup-plugin-flow-entry": "^0.3.2",
     "shx": "^0.3.2",
     "sinon": "^7.3.1",
     "wordwrap": "^1.0.0"

@@ -31,7 +31,7 @@
     }
   },
   "dependencies": {
-    "core-js": "^3.0.1",
+    "core-js": "^3.4.2",
     "events": "^3.0.0",
     "form-data": "^2.3.3",
     "isomorphic-fetch": "^2.2.1",
